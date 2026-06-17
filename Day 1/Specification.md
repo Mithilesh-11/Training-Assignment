@@ -1,9 +1,5 @@
 # Technical Specifications — JavaScript Learning Modules
 
-> **Product:** JavaScript Learning Modules v1.0
-> **Version:** 1.0.0 
-> **Last Updated:** 17-Jun-2026
-
 ## 1. Executive Summary
 
 This product provides JavaScript coding examples demonstrating fundamental concepts such as different loop types and variable hoisting, alongside an interactive command-line interface (CLI) quiz to test JavaScript knowledge. Its purpose is to offer clear, correct, and functional code implementations for educational and developmental use cases.
