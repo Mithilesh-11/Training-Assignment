@@ -2,9 +2,7 @@
 
 ## 1. Executive Summary
 
-This product provides JavaScript coding examples demonstrating functions, arrow functions, array methods, string methods, and object methods. Its purpose is to provide clear, correct, and functional implementations of commonly used JavaScript features while reinforcing data transformation techniques, string manipulation, and object handling.
-
-The module includes practical examples of method chaining, object merging, and mutation versus non-mutation behavior in JavaScript.
+This module provides JavaScript coding examples focused on data transformation, string manipulation, and object handling using modern JavaScript features. The implementation demonstrates practical usage of array method chaining, object merging techniques, and string formatting operations.
 
 ---
 
@@ -23,14 +21,13 @@ The module includes practical examples of method chaining, object merging, and m
 
 ## 3. Scope
 
-| Module                             | Description                                                                                              |
-| :--------------------------------- | :------------------------------------------------------------------------------------------------------- |
-| **Functions & Arrow Functions**    | Demonstrations of function declarations, arrow functions, and `this` binding behavior.                   |
-| **Array Methods**                  | Demonstrations of `map`, `filter`, `reduce`, `forEach`, `some`, `every`, `find`, `sort`, and `includes`. |
-| **String Methods**                 | Demonstrations of `split`, `includes`, `slice`, `substr`, `substring`, `trim`, and `replace`.            |
-| **Object Methods**                 | Demonstrations of `Object.keys`, `Object.values`, `Object.entries`, and `Object.assign`.                 |
-| **Data Transformation Assignment** | Examples using array method chaining to transform user data.                                             |
-| **Object Merge Comparison**        | Comparison of object merging using `Object.assign()` and spread syntax.                                  |
+| Module                          | Description                                                                                                                     |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Active User Age Calculation** | Uses `filter()`, `map()`, and `reduce()` to calculate the total age of active users from a collection of user objects.          |
+| **String Formatter**            | Uses `trim()`, `replace()`, `split()`, string transformation, and word capitalization to produce a formatted output string.     |
+| **Object Merge Comparison**     | Demonstrates object merging using `Object.assign()` and spread syntax while highlighting mutation versus non-mutation behavior. |
+| **Method Chaining**             | Demonstrates combining multiple array and string methods to perform data transformations efficiently.                           |
+
 
 ### Out of Scope
 
@@ -67,32 +64,9 @@ The module includes practical examples of method chaining, object merging, and m
 ---
 
 ## 5. Functional Requirements
-
-### FR-001 — System: Demonstrate Functions and Arrow Functions
-
-| Field                   | Detail                                                                                                                                                                        |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description**         | The system SHALL demonstrate traditional functions and arrow functions, including syntax differences and `this` binding behavior.                                             |
-| **Priority**            | High                                                                                                                                                                          |
-| **Source**              | Day 2 Topic Requirements                                                                                                                                                      |
-| **Acceptance Criteria** | Examples include a function declaration and an equivalent arrow function. <br> Output demonstrates correct execution. <br> Example illustrates differences in `this` binding. |
-| **Stored Data**         | None                                                                                                                                                                          |
-
 ---
 
-### FR-002 — System: Demonstrate Array Methods
-
-| Field                   | Detail                                                                                                                                               |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description**         | The system SHALL demonstrate the array methods `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `sort`, and `includes`.                |
-| **Priority**            | Critical                                                                                                                                             |
-| **Source**              | Day 2 Topic Requirements                                                                                                                             |
-| **Acceptance Criteria** | Each method is implemented using sample data. <br> Outputs demonstrate the purpose of each method. <br> Mutation behavior of `sort()` is documented. |
-| **Stored Data**         | User Array                                                                                                                                           |
-
----
-
-### FR-003 — System: Calculate Total Age of Active Users
+### FR-001 — System: Calculate Total Age of Active Users
 
 | Field                   | Detail                                                                                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -100,23 +74,12 @@ The module includes practical examples of method chaining, object merging, and m
 | **Priority**            | Critical                                                                                                                                                                  |
 | **Source**              | Assignment Requirement #1                                                                                                                                                 |
 | **Acceptance Criteria** | Active users are filtered correctly. <br> Ages are extracted using `map()`. <br> Total age is calculated using `reduce()`. <br> Sample input returns the expected result. |
-| **Stored Data**         | User Array                                                                                                                                                                |
+| **Stored Data**         | User Array                                                                                                                                     
+
 
 ---
 
-### FR-004 — System: Demonstrate String Methods
-
-| Field                   | Detail                                                                                                                                                                            |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description**         | The system SHALL demonstrate the string methods `trim`, `split`, `replace`, `includes`, `slice`, `substr`, and `substring`.                                                       |
-| **Priority**            | High                                                                                                                                                                              |
-| **Source**              | Day 2 Topic Requirements                                                                                                                                                          |
-| **Acceptance Criteria** | Each method is implemented using sample strings. <br> Outputs demonstrate the purpose of each method. <br> Differences between `slice`, `substr`, and `substring` are documented. |
-| **Stored Data**         | String Input                                                                                                                                                                      |
-
----
-
-### FR-005 — System: Build String Formatter
+### FR-002 — System: Build String Formatter
 
 | Field                   | Detail                                                                                                                                                                                              |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -128,11 +91,11 @@ The module includes practical examples of method chaining, object merging, and m
 
 ---
 
-### FR-006 — System: Demonstrate Object Methods
+### FR-003 — System: Demonstrate Object Method
 
 | Field                   | Detail                                                                                                      |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **Description**         | The system SHALL demonstrate `Object.keys()`, `Object.values()`, `Object.entries()`, and `Object.assign()`. |
+| **Description**         | The system SHALL demonstrate  `Object.assign()`. |
 | **Priority**            | High                                                                                                        |
 | **Source**              | Day 2 Topic Requirements                                                                                    |
 | **Acceptance Criteria** | Each method is implemented using sample objects. <br> Outputs demonstrate the purpose of each method.       |
@@ -140,7 +103,7 @@ The module includes practical examples of method chaining, object merging, and m
 
 ---
 
-### FR-007 — System: Compare Object Merging Techniques
+### FR-004 — System: Compare Object Merging Techniques
 
 | Field                   | Detail                                                                                                                                                                |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -152,7 +115,7 @@ The module includes practical examples of method chaining, object merging, and m
 
 ---
 
-### FR-008 — System: Document Mutation vs Non-Mutation Behavior
+### FR-005 — System: Document Mutation vs Non-Mutation Behavior
 
 | Field                   | Detail                                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------- |
