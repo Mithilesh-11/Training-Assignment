@@ -29,7 +29,7 @@ console.log("\nFOR LOOP - Object Keys");
 const keys = Object.keys(user);
 
 for (let i = 0; i < keys.length; i++) {
-     console.log(user[keys[i]]);
+     console.log(keys[i]);
            
 }
 
@@ -80,5 +80,5 @@ for (const value of numbers) {
 console.log("\nFOR...IN LOOP");
 
 for (const key in user) {
-    console.log("key : " + key + " Value :" + user[key]);
+    console.log(key);
 }

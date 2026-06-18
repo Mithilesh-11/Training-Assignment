@@ -20,7 +20,7 @@ const questions = [
     {
         id: 3,
         text: "Which loop iterates over the values of an iterable object?",
-        answer: "for of"
+        answer: "for...of"
     },
     {
         id: 4,
