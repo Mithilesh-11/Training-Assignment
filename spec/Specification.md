@@ -272,6 +272,12 @@ Handling:
 
 - `USER_STORAGE_KEY = "user"` — the key used to store user information in both localStorage and sessionStorage. It contains a serialized JSON object representing the authenticated user, including `email`, `loginMethod`, `loginTime` and `savedAt`.
 
+User Information:
+- email: string
+- loginMethod: "localStorage" | "sessionStorage"
+- loginTime: number
+- savedAt: number
+
 ---
 
 ### LocalStorage
@@ -279,12 +285,6 @@ Handling:
 Purpose: Store user information when the "Remember Me" option is selected.
 
 Storage Key: `user`  
-
-User Information:
-- email: string
-- loginMethod: "localStorage" 
-- loginTime: number
-- savedAt: number
 
 Stored Data: User Information
 
@@ -297,12 +297,6 @@ Reason: Data persists even after the browser is closed and reopened, allowing us
 Purpose: Store user information when the "Remember Me" option is not selected.
 
 Storage Key: `user`
-
-User Information:
-- email: string
-- loginMethod: "sessionStorage"
-- loginTime: number
-- savedAt: number
 
 Stored Data: User Information
 
