@@ -22,12 +22,11 @@ This module provides JavaScript coding examples focused on data transformation, 
 ## 3. Scope
 
 | Module                          | Description                                                                                                                     |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------ |
 | **Active User Age Calculation** | Uses `filter()`, `map()`, and `reduce()` to calculate the total age of active users from a collection of user objects.          |
 | **String Formatter**            | Uses `trim()`, `replace()`, `split()`, string transformation, and word capitalization to produce a formatted output string.     |
 | **Object Merge Comparison**     | Demonstrates object merging using `Object.assign()` and spread syntax while highlighting mutation versus non-mutation behavior. |
 | **Method Chaining**             | Demonstrates combining multiple array and string methods to perform data transformations efficiently.                           |
-
 
 ### Out of Scope
 
@@ -64,25 +63,23 @@ This module provides JavaScript coding examples focused on data transformation, 
 ---
 
 ## 5. Functional Requirements
----
 
 ### FR-001 — System: Calculate Total Age of Active Users
 
 | Field                   | Detail                                                                                                                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Description**         | The system SHALL use a chain of `filter()`, `map()`, and `reduce()` to calculate the total age of active users.                                                           |
 | **Priority**            | Critical                                                                                                                                                                  |
 | **Source**              | Assignment Requirement #1                                                                                                                                                 |
 | **Acceptance Criteria** | Active users are filtered correctly. <br> Ages are extracted using `map()`. <br> Total age is calculated using `reduce()`. <br> Sample input returns the expected result. |
-| **Stored Data**         | User Array                                                                                                                                     
-
+| **Stored Data**         | User Array  |
 
 ---
 
 ### FR-002 — System: Build String Formatter
 
 | Field                   | Detail                                                                                                                                                                                              |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Description**         | The system SHALL create a string formatter using `trim()`, `split()`, `replace()`, and `includes()`.                                                                                                |
 | **Priority**            | Critical                                                                                                                                                                                            |
 | **Source**              | Assignment Requirement #2                                                                                                                                                                           |
@@ -93,20 +90,20 @@ This module provides JavaScript coding examples focused on data transformation, 
 
 ### FR-003 — System: Demonstrate Object Method
 
-| Field                   | Detail                                                                                                      |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **Description**         | The system SHALL demonstrate  `Object.assign()`. |
-| **Priority**            | High                                                                                                        |
-| **Source**              | Day 2 Topic Requirements                                                                                    |
-| **Acceptance Criteria** | Each method is implemented using sample objects. <br> Outputs demonstrate the purpose of each method.       |
-| **Stored Data**         | Object Data                                                                                                 |
+| Field                   | Detail                                                                                                |
+| :---------------------- | :---------------------------------------------------------------------------------------------------- |
+| **Description**         | The system SHALL demonstrate `Object.assign()`.                                                       |
+| **Priority**            | High                                                                                                  |
+| **Source**              | Day 2 Topic Requirements                                                                              |
+| **Acceptance Criteria** | Each method is implemented using sample objects. <br> Outputs demonstrate the purpose of each method. |
+| **Stored Data**         | Object Data                                                                                           |
 
 ---
 
 ### FR-004 — System: Compare Object Merging Techniques
 
 | Field                   | Detail                                                                                                                                                                |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Description**         | The system SHALL merge two objects using both `Object.assign()` and spread syntax and document the differences between the two approaches.                            |
 | **Priority**            | Critical                                                                                                                                                              |
 | **Source**              | Assignment Requirement #3                                                                                                                                             |
@@ -118,7 +115,7 @@ This module provides JavaScript coding examples focused on data transformation, 
 ### FR-005 — System: Document Mutation vs Non-Mutation Behavior
 
 | Field                   | Detail                                                                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------ |
 | **Description**         | The system SHALL document which methods mutate original values and which return new values.                               |
 | **Priority**            | Critical                                                                                                                  |
 | **Source**              | Spec Submission Requirement                                                                                               |
@@ -220,7 +217,7 @@ const obj2 = {
 ## 7. Mutation Reference Table
 
 | Method          | Mutates Original Value |
-| --------------- | ---------------------- |
+| :-------------- | :--------------------- |
 | map()           | No                     |
 | filter()        | No                     |
 | reduce()        | No                     |
