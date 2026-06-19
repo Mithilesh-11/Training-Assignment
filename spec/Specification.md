@@ -6,7 +6,7 @@
 
 ## 1. Executive Summary
 
-This product consists of three JavaScript assignments designed to demonstrate modern ES6+ features, asynchronous programming patterns, API data parsing techniques, and browser storage mechanisms. System demonstrates Callback Hell, Promise Chaining, and async/await, demonstrates destructuring, optional chaining, nullish coalescing, default parameters, and parsing nested API responses. It also implements a React based Remember Me feature using localStorage and sessionStorage.
+The system demonstrates Callback Hell, Promise Chaining, and async/await, along with destructuring, optional chaining, nullish coalescing, default parameters, nested API response parsing, and browser storage mechanisms.
 
 ---
 
@@ -55,10 +55,10 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 
 | Field | Detail |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The User can access and view the main interface of the Remember Me application and execute JavaScript assignments through the browser console. |
+| **Description** | The User can access and view the main interface of the Remember Me application  |
 | **Priority** | Critical |
 | **Source** | Assignment Requirements |
-| **Acceptance Criteria** | _ Application loads successfully. <br> _ Remember Me login form is displayed. |
+| **Acceptance Criteria** | - Application loads successfully.<br> - Remember Me login form is displayed. |
 | **Stored Data** | None |
 
 ---
@@ -70,7 +70,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Description** | The System should demonstrate asynchronous operations. |
 | **Priority** | High |
 | **Source** | Assignment 1 |
-| **Acceptance Criteria** | _ Assignment executes successfully. <br> _ Callback Hell, Promise Chaining, and Async/Await outputs are displayed. |
+| **Acceptance Criteria** | - Assignment executes successfully.<br> - Callback Hell, Promise Chaining, and Async/Await outputs are displayed. |
 | **Stored Data** | None |
 
 ---
@@ -82,7 +82,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Description** | The System must simulate a multi-step asynchronous workflow consisting of: 1. Fetch User 2. Fetch Orders 3. Fetch Payments. The workflow must be implemented using Callback Hell, Promise Chaining, and Async/Await. |
 | **Priority** | Critical |
 | **Source** | Assignment 1 |
-| **Acceptance Criteria** | _ User data is fetched first. <br> _ Order data is fetched after user retrieval. <br> _ Payment data is fetched after order retrieval. <br> _ All three implementations produce the same final result. |
+| **Acceptance Criteria** | - User data is fetched first.<br> - Order data is fetched after user retrieval.<br> - Payment data is fetched after order retrieval.<br> - If any retrieval step fails, the workflow stops and a clear error is reported.<br> - All three implementations produce the same final result when successful. |
 | **Stored Data** | None |
 
 ---
@@ -94,7 +94,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Description** | The application must process nested API response data using destructuring, optional chaining, and nullish coalescing. The assignment includes a simulated nested API response object and a real GitHub Users API response. Both responses must be parsed safely without runtime errors when properties are missing. |
 | **Priority** | Critical |
 | **Source** | Assignment 2 |
-| **Acceptance Criteria** | _ Nested object properties are extracted using destructuring. <br> _ Optional chaining (`?.`) is used when accessing potentially undefined nested properties. <br> _ Nullish coalescing (`??`) provides default values for missing fields. <br> _ GitHub user profile information is successfully retrieved and displayed. <br> \* Missing fields do not cause application crashes. |
+| **Acceptance Criteria** | - Nested object properties are extracted using destructuring.<br> - Optional chaining (`?.`) is used when accessing potentially undefined nested properties.<br> - Nullish coalescing (`??`) provides default values for missing fields.<br> - GitHub user profile information is successfully retrieved and displayed.<br> - Non-200 GitHub responses are handled gracefully.<br> - GitHub API rate limit errors are detected and reported.<br> -  Missing fields do not cause application crashes. |
 | **Stored Data** | None |
 
 ---
@@ -106,7 +106,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Description** | The application must store authentication data using either localStorage or sessionStorage based on the user's Remember Me selection. |
 | **Priority** | High |
 | **Source** | Assignment 3 |
-| **Acceptance Criteria** | _ If Remember Me is checked, user data is stored in localStorage. <br> _ If Remember Me is not checked, user data is stored in sessionStorage. |
+| **Acceptance Criteria** | - User must provide a non-empty email value before login. <br>  - Email format should be validated before storing user information. <br> - If Remember Me is checked, user data is stored in localStorage.<br> - If Remember Me is not checked, user data is stored in sessionStorage. <br> - Invalid input should display an appropriate validation message and prevent storage.  |
 | **Stored Data** | User Information |
 
 ---
@@ -118,7 +118,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Description** | The application must restore user information from browser storage when the application loads. |
 | **Priority** | High |
 | **Source** | Assignment 3 |
-| **Acceptance Criteria** | _ localStorage is checked first. <br> _ sessionStorage is checked second. <br> \* Existing users are automatically logged in. |
+| **Acceptance Criteria** | - localStorage is checked first.<br> - sessionStorage is checked second.<br> - Existing users are automatically logged in. <br>- Stale localStorage data older than 30 days must not be restored. <br> - Expired data must be automatically removed. <br> - Invalid or corrupted stored data should be cleared automatically.|
 | **Stored Data** | User Information |
 
 ---
@@ -130,7 +130,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Description** | The User can log out of the application. |
 | **Priority** | High |
 | **Source** | Assignment 3 |
-| **Acceptance Criteria** | _ Logout button is available. <br> _ Clicking Logout removes stored user information from localStorage and sessionStorage. <br> \* Login screen is displayed again. |
+| **Acceptance Criteria** | - Logout button is available.<br> - Clicking Logout removes stored user information from localStorage and sessionStorage.<br> -Login screen is displayed again. |
 | **Stored Data** | User Information |
 
 ---
@@ -141,8 +141,8 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | ----------------------- | ---------------------------------------------------------------------------------- |
 | **Description** | The application must implement error handling for asynchronous operations. |
 | **Priority** | Critical |
-| **Source** | Assignment |
-| **Acceptance Criteria** | _ try/catch blocks should used. <br> _ Errors are logged with meaningful messages. |
+| **Source** | Assignment 2 & 3 |
+| **Acceptance Criteria** | - try/catch blocks should be used.<br> - Errors are logged with meaningful messages.<br> - User-friendly error messages should be displayed when failures occur. |
 | **Stored Data** | None |
 
 ---
@@ -158,7 +158,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 | **Payment** | Simulated payment information. | `paymentId`, `status` | In-memory |
 | **Nested API Response** | Object used for destructuring and optional chaining demonstrations. | `user.profile`, `user.contact`, `user.address` | In-memory |
 | **GitHub User Profile** | Response from GitHub Users API. | `login`, `name`, `company`, `location`, `followers`, `following` | API Response |
-| **User Information** | Stored when Remember Me is enabled or disabled. | `email`, `loginMethod`, `loginTime` | localStorage / sessionStorage |
+| **User Information** | Stored when Remember Me is enabled or disabled. | `email`, `loginMethod`, `loginTime` , `savedAt` | localStorage / sessionStorage |
 
 ---
 
@@ -169,6 +169,7 @@ This product consists of three JavaScript assignments designed to demonstrate mo
 - Browser storage access should be performed safely.
 - Sensitive information such as passwords should never be stored in browser storage.
 - Authentication data stored for demonstration purposes should be removed on logout.
+- Tokens, passwords, and other sensitive credentials must never be stored in browser storage.
 
 ---
 
@@ -187,6 +188,24 @@ The workflow is implemented using:
 - Async/Await
 
 Each implementation produces the same result while demonstrating different approaches to handling asynchronous operations.
+
+### Sample Payloads (Reference Only)
+
+The following sample request/response payloads are provided for clarity. They are illustrative only and do not require a formal implementation in the assignment code.
+
+- User request payload: `{}`
+- User response payload: `{ id: 1, name: 'John Doe' }`
+
+- Orders request payload: `{ userId: 1 }`
+- Orders response payload: `[{ orderId: 101, amount: 500 }]`
+
+- Payments request payload: `{ orderId: 101 }`
+- Payments response payload: `[{ paymentId: 1001, status: 'Completed' }]`
+
+Each step should follow the dependency chain:
+
+- `user.id` → orders retrieval
+- `orders[0].orderId` → payments retrieval
 
 ---
 
@@ -207,11 +226,12 @@ Handling:
 ### Error State 2: GitHub API Request Failure
 
 Cause:
-Network issues, invalid username, or API errors.
+Network issues, invalid username, API rate limiting, or non-200 API responses.
 
 Handling:
 - Validate response using `response.ok`.
-- Throw an error for unsuccessful requests.
+- Detect GitHub rate limit responses and surface a clear message.
+- Throw an error for unsuccessful requests, including non-200 status codes.
 - Catch errors using `try/catch`.
 - Log meaningful error messages.
 
@@ -225,7 +245,8 @@ Any asynchronous operation fails during Promise execution.
 Handling:
 - Use `.catch()` to capture errors.
 - Stop further execution.
-- Display the error message.
+- Display a user-friendly error message.
+- Log the technical error details for debugging.
 
 ---
 
@@ -236,7 +257,10 @@ User, order, or payment retrieval fails.
 
 Handling:
 - Wrap asynchronous operations in `try/catch`.
-- Log the error message.
+- If User retrieval fails, stop the workflow immediately and display a user-friendly "User load failed" message.
+- If Orders retrieval fails, stop the workflow and display a user-friendly "Order load failed" message tied to the retrieved user.
+- If Payments retrieval fails, stop the workflow and display a user-friendly "Payment load failed" message tied to the retrieved order.
+- Log the technical error message for debugging.
 - Prevent application crashes.
 
 ---
@@ -244,9 +268,23 @@ Handling:
 ## 9. Storage Strategy
 
 
+### Storage Key Constants
+
+- `USER_STORAGE_KEY = "user"` — the key used to store user information in both localStorage and sessionStorage. It contains a serialized JSON object representing the authenticated user, including `email`, `loginMethod`, `loginTime` and `savedAt`.
+
+---
+
 ### LocalStorage
 
 Purpose: Store user information when the "Remember Me" option is selected.
+
+Storage Key: `user`  
+
+User Information:
+- email: string
+- loginMethod: "localStorage" 
+- loginTime: number
+- savedAt: number
 
 Stored Data: User Information
 
@@ -257,6 +295,14 @@ Reason: Data persists even after the browser is closed and reopened, allowing us
 ### SessionStorage
 
 Purpose: Store user information when the "Remember Me" option is not selected.
+
+Storage Key: `user`
+
+User Information:
+- email: string
+- loginMethod: "sessionStorage"
+- loginTime: number
+- savedAt: number
 
 Stored Data: User Information
 
@@ -271,6 +317,9 @@ On application startup:
 1. Check localStorage for existing user information.
 2. If no data exists, check sessionStorage.
 3. Restore the user session if stored data is found.
+4. If user data exists in both localStorage and sessionStorage, prefer localStorage and restore from it.
+5. If stored data is invalid or corrupted (e.g. not valid JSON or missing required user fields), clear the invalid data and do not restore the session.
+6. If localStorage user data is stale or outdated based on a defined expiration threshold, clear it and require a fresh login.
 
 ---
 
@@ -284,3 +333,59 @@ On logout:
 
 ---
 
+### Storage Data Expiration & Cleanup Strategy
+
+To prevent outdated user sessions from persisting indefinitely, the application implements an automatic cleanup strategy for stale data.
+
+**Data Expiration Threshold:**
+- User data stored in localStorage expires after **30 days** of inactivity.
+- Each stored user record includes a `savedAt` timestamp (in milliseconds since epoch).
+
+**Stale Data Detection:**
+On application startup and during user retrieval:
+1. Check if the stored user data has a `savedAt` property.
+2. Calculate the elapsed time: `Date.now() - savedAt`.
+3. If elapsed time exceeds 30 days (30 × 24 × 60 × 60 × 1000 milliseconds), consider the data stale.
+
+**Stale Data Removal:**
+- Automatically remove stale user data from localStorage.
+- Require the user to log in again with current credentials.
+- Do not restore the session for expired data.
+
+**Corrupted Data Handling:**
+- If stored data is invalid JSON or contains invalid data structures, remove it.
+- Clear both localStorage and sessionStorage entries if corruption is detected.
+- Log the error for debugging purposes.
+- Require a fresh login.
+
+---
+
+## 10. Supported Environment & Browser Compatibility
+
+### Runtime Environment
+
+- Modern web browser with JavaScript enabled.
+- React application executed in a browser environment.
+- Internet connection required for GitHub Users API requests.
+
+### JavaScript Requirements
+
+The browser must support ES6+ features used by the application, including:
+
+- Arrow Functions
+- Promises
+- async/await
+- Destructuring
+- Optional Chaining (`?.`)
+- Nullish Coalescing (`??`)
+- localStorage
+- sessionStorage
+- Fetch API
+
+### Unsupported Environments
+
+The following environments are outside the scope of this assignment:
+
+- Internet Explorer
+- Legacy browsers without ES6+ support
+- Server-side execution environments without browser storage APIs
