@@ -189,24 +189,6 @@ The workflow is implemented using:
 
 Each implementation produces the same result while demonstrating different approaches to handling asynchronous operations.
 
-### Sample Payloads (Reference Only)
-
-The following sample request/response payloads are provided for clarity. They are illustrative only and do not require a formal implementation in the assignment code.
-
-- User request payload: `{}`
-- User response payload: `{ id: 1, name: 'John Doe' }`
-
-- Orders request payload: `{ userId: 1 }`
-- Orders response payload: `[{ orderId: 101, amount: 500 }]`
-
-- Payments request payload: `{ orderId: 101 }`
-- Payments response payload: `[{ paymentId: 1001, status: 'Completed' }]`
-
-Each step should follow the dependency chain:
-
-- `user.id` → orders retrieval
-- `orders[0].orderId` → payments retrieval
-
 ---
 
 ## 8. Error Handling Strategy
