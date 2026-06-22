@@ -93,11 +93,21 @@ This document outlines the technical specification for a TypeScript learning ass
 
 | Field | Detail |
 |--------|--------|
-| Description | The TypeScript compiler must report an error when an object that does not conform to the User interface structure is assigned to a User type. |
+| Description | The TypeScript compiler must report an error when an object does not conform to the User interface structure. |
 | Priority | High |
 | Source | constraints |
-| Acceptance Criteria | <ul><li>Attempting to assign { id: 1, name: 'John' } to a User variable without email and isActive does not produce an error because they are optional.</li><li>Attempting to assign { name: 'John', email: 'a@b.com' } to a User variable produces a compiler error due to the missing id property.</li><li>Attempting to modify the id property of a User object produces a compiler error.</li><li>Attempting to assign a non-string value to name property produces a compiler error.</li></ul> |
+| Acceptance Criteria | <ul><li>Attempting to assign <code>{ name: 'John', email: 'a@b.com' }</code> to a User variable produces a type error because the required <code>id</code> property is missing.</li><li>Attempting to modify the <code>id</code> property of a User object produces a type error because <code>id</code> is readonly.</li><li>Attempting to assign a non-string value to the <code>name</code> property produces a type error.</li></ul> |
 | Stored Data |  |
+
+### FR-006A — Validate Valid User Object Assignment
+
+| Field | Detail |
+|--------|--------|
+| Description | The TypeScript compiler must allow assignment of objects that satisfy all required properties of the User interface, while omitting optional properties. |
+| Priority | High |
+| Source | constraints |
+| Acceptance Criteria | <ul><li>Assigning <code>{ id: 1, name: 'John' }</code> to a User variable compiles successfully because <code>email</code> and <code>isActive</code> are optional properties.</li><li>Assigning <code>{ id: 1, name: 'John', email: 'john@example.com' }</code> to a User variable compiles successfully.</li><li>Assigning <code>{ id: 1, name: 'John', isActive: true }</code> to a User variable compiles successfully.</li><li>Assigning <code>{ id: 1, name: 'John', email: 'john@example.com', isActive: true }</code> to a User variable compiles successfully.</li></ul> |
+| Stored Data | User (id, name, email, isActive) |
 
 ### FR-007 —  Validate Invalid formatFullName Call
 
@@ -213,14 +223,53 @@ function checkIfUserIsActive(
 ): boolean;
 ```
 
+#### Key Invariants / Business Rules
 
--   **Key Invariants / Business Rules**:
-    *   `formatFullName`: Requires two `string` arguments (`firstName`, `lastName`) and returns a `string`.
-    *   `calculateTotalPrice`: Requires an array of `number`s (`items`) and a `number` (`discount`), returning a `number`.
-    *   `checkIfUserIsActive`: Requires an argument conforming to the `User` interface and returns a `boolean`.
+- **formatFullName**
+  - Requires two `string` arguments: `firstName` and `lastName`.
+  - Returns a single `string` containing the formatted full name.
 
+- **calculateTotalPrice**
+  - Requires an array of `number` values (`items`) and a `number` (`discount`).
+  - The `discount` parameter represents a fixed monetary amount, not a percentage.
+  - The total price is calculated as:
 
-## 6. Expected TypeScript Compiler Errors
+    ```text
+    total = sum(items) - discount
+    ```
+
+  - Returns the calculated total as a `number`.
+
+- **checkIfUserIsActive**
+  - Requires an argument conforming to the `User` interface.
+  - Returns a `boolean`.
+  - If `user.isActive` is `true`, the function returns `true`.
+  - If `user.isActive` is `false`, the function returns `false`.
+  - If `user.isActive` is `undefined` (property not provided), the function returns `false`.
+
+### 5.4 TypeScript Compiler Configuration
+
+All compiler-error requirements defined in this specification assume that TypeScript strict mode is enabled.
+
+The implementation must use the following compiler settings:
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true
+  }
+}
+```
+
+## 6. Expected TypeScript Errors
+
+Note:
+Compiler error wording may vary slightly between TypeScript versions.
+Validation should be based on the presence of the type error rather than an exact text match.
 
 #### 1. Invalid User Object
 
