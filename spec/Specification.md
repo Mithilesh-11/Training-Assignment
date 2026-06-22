@@ -349,6 +349,7 @@ Argument of type 'null' is not assignable to parameter of type 'User'.
 const state: ApiResponseState = "pending";
 ```
 
+
 Expected Compiler Error:
 
 ```text
