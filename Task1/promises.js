@@ -4,6 +4,10 @@ CALLBACK Hell
 ========================================
 */
 
+const API_DELAY_MS = 1000;
+const PROMISE_DELAY_MS = 4000;
+const ASYNC_DELAY_MS = 8000;
+
 function fetchUserCallback(userId, callback) {
   setTimeout(() => {
     if (!userId) {
@@ -17,7 +21,7 @@ function fetchUserCallback(userId, callback) {
       id: userId,
       name: "John Doe",
     });
-  }, 1000);
+  }, API_DELAY_MS);
 }
 
 function fetchOrdersCallback(userId, callback) {
@@ -38,7 +42,7 @@ function fetchOrdersCallback(userId, callback) {
         amount: 500,
       },
     ]);
-  }, 1000);
+  }, API_DELAY_MS);
 }
 
 function fetchPaymentsCallback(orderId, callback) {
@@ -59,7 +63,7 @@ function fetchPaymentsCallback(orderId, callback) {
         status: "Completed",
       },
     ]);
-  }, 1000);
+  }, API_DELAY_MS);
 }
 
 
@@ -114,7 +118,7 @@ function fetchUser(userId) {
         id: userId,
         name: "John Doe",
       });
-    }, 1000);
+    }, API_DELAY_MS);
   });
 }
 
@@ -135,7 +139,7 @@ function fetchOrders(userId) {
           amount: 500,
         },
       ]);
-    }, 1000);
+    }, API_DELAY_MS);
   });
 }
 
@@ -158,7 +162,7 @@ function fetchPayments(orderId) {
           status: "Completed",
         },
       ]);
-    }, 1000);
+    }, API_DELAY_MS);
   });
 }
 
@@ -187,7 +191,7 @@ setTimeout(() => {
       console.error("Data retrieval failed.");
       console.error(error.message);
     });
-}, 4000);
+}, PROMISE_DELAY_MS);
 
 
 
@@ -202,43 +206,51 @@ async function processUserData(userId) {
   try {
     console.log("\n===== ASYNC / AWAIT =====");
 
-    const user = await fetchUser(userId)
-      .catch(error => {
-        error.step = "User";
-        throw error;
-      });
-
-    const orders = await fetchOrders(user.id)
-      .catch(error => {
-        error.step = "Order";
-        throw error;
-      });
-
-    if (!orders?.length) {
-      const error = new Error("No orders found for this user.");
-      error.step = "Order";
-      throw error;
+    let user;
+    try {
+      user = await fetchUser(userId);
+    } catch (error) {
+      console.error("User load failed");
+      console.error("Technical Details:", error.message);
+      return;
     }
 
-    const payments = await fetchPayments(orders[0].orderId)
-      .catch(error => {
-        error.step = "Payment";
-        throw error;
-      });
+    let orders;
+    try {
+      orders = await fetchOrders(user.id);
+    } catch (error) {
+      console.error("Order load failed");
+      console.error("Technical Details:", error.message);
+      return;
+    }
+
+    if (!orders?.length) {
+      console.error("Order load failed");
+      console.error("Technical Details: No orders found for this user.");
+      return;
+    }
+
+    let payments;
+    try {
+      payments = await fetchPayments(orders[0].orderId);
+    } catch (error) {
+      console.error("Payment load failed");
+      console.error("Technical Details:", error.message);
+      return;
+    }
 
     console.log("User:", user);
     console.log("Orders:", orders);
     console.log("Payments:", payments);
 
   } catch (error) {
-    console.error(`${error.step} load failed`);
-    console.error("Technical Details:", error.message);
+    console.error("Unexpected error:", error.message);
   }
 }
 
 setTimeout(() => {
   processUserData(1);
-}, 8000);
+}, ASYNC_DELAY_MS);
 
 
 // Uncomment to test failure scenarios

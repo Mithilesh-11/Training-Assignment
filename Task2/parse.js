@@ -35,11 +35,11 @@ function parseUserData(response = {}) {
   } = response ?? {};
 
   // Printing each value safely using optional chaining and nullish coalescing
-  console.log("ID:", response?.data?.user?.id ?? "ID Not Available");
-  console.log("First Name:", response?.data?.user?.profile?.firstName ?? "First Name Not Available");
-  console.log("Last Name:", response?.data?.user?.profile?.lastName ?? "Last Name Not Available" );
-  console.log("Email:", response?.data?.user?.profile?.contact?.email ?? "Email Not Available");
-  console.log("City:", response?.data?.user?.address?.city ?? "City Not Available");
+      console.log("ID:", id);
+      console.log("First Name:", firstName);
+      console.log("Last Name:", lastName);
+      console.log("Email:", email);
+      console.log("City:", city);
 
   // Returning the destructured variables
   return { id, firstName, lastName, email, city };
