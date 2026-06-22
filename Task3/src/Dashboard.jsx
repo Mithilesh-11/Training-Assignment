@@ -1,5 +1,6 @@
-import React from 'react';
 import { removeUser } from "./storage";
+import React from "react";
+
 
 function Dashboard({ user, setUser }) {
   const handleLogout = () => {

@@ -1,4 +1,4 @@
-export const USER_STORAGE_KEY = "user";
+export const USER_STORAGE_KEY = "auth-app:user";
 
 const isValidUser = (user) => {
   return (
@@ -25,6 +25,8 @@ export const saveUser = (user, rememberMe) => {
     sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
     localStorage.removeItem(USER_STORAGE_KEY);
   }
+    return userData;
+
 };
 
 export const getUser = () => {
@@ -47,11 +49,12 @@ export const getUser = () => {
       // Check if user data stored in localStorage is stale/outdated based on 30-day expiration
       const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
       if (Date.now() - parsedUser.savedAt > THIRTY_DAYS) {
-        localStorage.removeItem(USER_STORAGE_KEY);
-        return null;
+      localStorage.removeItem(USER_STORAGE_KEY);
       }
-
-      return parsedUser;
+      else {
+        return parsedUser;
+      }
+    
     }
 
     if (sessionUser) {

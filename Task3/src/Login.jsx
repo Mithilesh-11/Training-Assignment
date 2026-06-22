@@ -1,16 +1,19 @@
+import React from "react";
 import { useState } from "react";
-import React from 'react';
 import { saveUser } from "./storage";
+
 
 export default function Login({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [validationError, setValidationError] = useState("");
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const MIN_PASSWORD_LENGTH = 8;
 
   const handleLogin = (userData, rememberMe) => {
-    saveUser(userData, rememberMe);
-    setUser(userData);
+    const savedUser  = saveUser(userData, rememberMe);
+    setUser(savedUser);
   };
   
   const handleSubmit = (e) => {
@@ -25,15 +28,14 @@ export default function Login({ setUser }) {
     }
 
     // Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(trimmedEmail)) {
+    if (!EMAIL_REGEX.test(trimmedEmail)) {
       setValidationError("Please enter a valid email address.");
       return;
     }
 
     // Trim password and enforce length
     const trimmedPassword = password.trim();
-    if (trimmedPassword.length < 8) {
+    if (trimmedPassword.length < MIN_PASSWORD_LENGTH) {
       setValidationError("Password must be at least 8 characters.");
       return;
     }
