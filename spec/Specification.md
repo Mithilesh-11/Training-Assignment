@@ -1,367 +1,357 @@
-# Technical Specifications — ES6+ Features & Browser Storage Demo App
+# Technical Specifications — TypeScript Fundamentals Learning Assignment
 
-> **Product:** ES6+ Features & Browser Storage Demo App
-
----
+**Product:** TypeScript Fundamentals Learning Assignment 
 
 ## 1. Executive Summary
 
-The system demonstrates Callback Hell, Promise Chaining, and async/await, along with destructuring, optional chaining, nullish coalescing, default parameters, nested API response parsing, and browser storage mechanisms.
-
----
+This document outlines the technical specification for a TypeScript learning assignment. It details the declarative policy for defining type-safe interfaces, function type annotations, and union types, ensuring adherence to strict TypeScript compilation rules.
 
 ## 2. Glossary & Definitions
 
 | Term | Definition |
-| :-------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **ES6+** | EcmaScript 2015 and subsequent versions of the JavaScript language standard, including features like destructuring, spread/rest operators, default parameters, optional chaining, and nullish coalescing. |
-| **React** | A JavaScript library for building user interfaces, maintained by Meta and a community of individual developers and companies. |
-| **localStorage** | A web storage object that allows JavaScript applications to save key/value pairs in a web browser with no expiration date. Data stored persists even after the browser is closed. |
-| **sessionStorage** | A web storage object that allows JavaScript applications to save key/value pairs in a web browser for the duration of a single session. Data stored is cleared when the browser tab is closed. |
-| **Optional Chaining (`?.`)** | A JavaScript operator that permits reading the value of a property located deep within a chain of connected objects without having to explicitly validate that each reference in the chain is valid. |
-| **Nullish Coalescing (`??`)** | A JavaScript operator that returns its right-hand side operand when its left-hand side operand is `null` or `undefined`, and otherwise returns its left-hand side operand. |
-| **Async/Await** | A syntax in JavaScript for writing asynchronous, promise-based code as if it were synchronous, making it easier to read and write. |
-| **Destructuring** | A JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables. |
-| **Spread/Rest Operators (`...`)** | The `...` syntax in JavaScript used for either expanding an iterable (spread) or collecting multiple elements into an array (rest). |
+|------|------------|
+| User | An interface defining the structure for user objects, including id, name, email, and isActive properties. |
+| ApiResponseState | A union type representing the distinct states of an API response: 'loading', 'success', or 'error'. |
+| formatFullName | A function accepting firstName and lastName (both strings) and returning a concatenated full name string. |
+| calculateTotalPrice | A function accepting an array of items (numbers) and a discount (number), returning the calculated total price. |
+| checkIfUserIsActive | A function accepting a User object and returning a boolean indicating if the user is active. |
 
----
 
 ## 3. Scope
 
 ### 3.1. In Scope
 
 | Module | Description |
-| :----------------------- | :---------------------------------------------------------------------------------------------------------------------------- |
-| **Async Programming** | Demonstrates Callback Hell, Promise Chaining, async/await, and try/catch using a simulated User → Orders → Payments workflow. |
-| **API Response Parsing** | Demonstrates destructuring, optional chaining, nullish coalescing, default parameters, and parsing nested API responses. |
-| **API Integration** | Retrieves user profile information from the GitHub Users API using fetch and async/await. |
-| **Browser Storage** | Implements a Remember Me feature using localStorage and sessionStorage in a React application. |
-| **Error Handling** | Uses try/catch blocks to handle API and asynchronous operation failures. |
+|---------|-------------|
+| User Interface Definition | Specification of the User interface with required, optional, and readonly properties. |
+| Function Type Annotations | Definition of type signatures for formatFullName, calculateTotalPrice, and checkIfUserIsActive functions. |
+| ApiResponseState Union Type | Creation of a union type to represent distinct API response states. |
+| Compiler Error Scenarios | Explicit documentation of expected TypeScript compiler errors for invalid usage of defined types and functions. |
 
 ### 3.2. Out of Scope
 
-- Implementation of Cookies and Service Workers.
-- Advanced caching strategies.
-- Backend authentication systems.
-- Database persistence.
-- Unit, integration, or end-to-end testing.
-- Advanced UI/UX features not directly related to the assignment objectives.
-
----
+- User Interface (UI) design or implementation details.
+- Backend service implementation or API endpoint definitions.
+- Specific runtime logic for the functions beyond their type signatures.
+- Database schemas or data storage mechanisms.
+- Authentication or authorization mechanisms.
+- Performance optimizations.
 
 ## 4. Functional Requirements
 
-#### FR-001 — User: View Application Interface
+### FR-001 — Define User Interface
 
 | Field | Detail |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The User can access and view the main interface of the Remember Me application  |
-| **Priority** | Critical |
-| **Source** | Assignment Requirements |
-| **Acceptance Criteria** | - Application loads successfully.<br> - Remember Me login form is displayed. |
-| **Stored Data** | None |
+|--------|--------|
+| Description | The User interface must define the structure of a user object containing a readonly identifier, a required name, and optional email and activity status properties. |
+| Priority | Critical |
+| Source | constraints, context |
+| Acceptance Criteria | <ul><li>The id property is defined as readonly number.</li><li>The name property is defined as string.</li><li>The email property is defined as optional string.</li><li>The isActive property is defined as optional boolean.</li></ul> |
+| Stored Data | User (id, name, email, isActive) |
 
----
-
-#### FR-002 — User: Initiate Data Fetching Demonstration
+### FR-002 —  Define formatFullName Function Type
 
 | Field | Detail |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Description** | The System should demonstrate asynchronous operations. |
-| **Priority** | High |
-| **Source** | Assignment 1 |
-| **Acceptance Criteria** | - Assignment executes successfully.<br> - Callback Hell, Promise Chaining, and Async/Await outputs are displayed. |
-| **Stored Data** | None |
+|--------|--------|
+| Description | The formatFullName function must accept a first name and a last name, both as strings, and return a single string representing the full name. |
+| Priority | High |
+| Source | context |
+| Acceptance Criteria | <ul><li>The firstName parameter is typed as string.</li><li>The lastName parameter is typed as string.</li><li>The function's return type is string.</li></ul> |
+| Stored Data |  |
 
----
-
-#### FR-003 — Application: Simulate Multi-Step Asynchronous Data Operations
+### FR-003 —  Define calculateTotalPrice Function Type
 
 | Field | Detail |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The System must simulate a multi-step asynchronous workflow consisting of: 1. Fetch User 2. Fetch Orders 3. Fetch Payments. The workflow must be implemented using Callback Hell, Promise Chaining, and Async/Await. |
-| **Priority** | Critical |
-| **Source** | Assignment 1 |
-| **Acceptance Criteria** | - User data is fetched first.<br> - Order data is fetched after user retrieval.<br> - Payment data is fetched after order retrieval.<br> - If any retrieval step fails, the workflow stops and a clear error is reported.<br> - All three implementations produce the same final result when successful. |
-| **Stored Data** | None |
+|--------|--------|
+| Description | The calculateTotalPrice function must accept an array of numbers representing item prices and a number representing a discount, then return a number representing the calculated total. |
+| Priority | High |
+| Source | context |
+| Acceptance Criteria | <ul><li>The items parameter is typed as number[].</li><li>The discount parameter is typed as number.</li><li>The function's return type is number.</li></ul> |
+| Stored Data |  |
 
----
-
-#### FR-004 — Application: Parse Nested API Response with ES6+ Features
+### FR-004 —  Define checkIfUserIsActive Function Type
 
 | Field | Detail |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The application must process nested API response data using destructuring, optional chaining, and nullish coalescing. The assignment includes a simulated nested API response object and a real GitHub Users API response. Both responses must be parsed safely without runtime errors when properties are missing. |
-| **Priority** | Critical |
-| **Source** | Assignment 2 |
-| **Acceptance Criteria** | - Nested object properties are extracted using destructuring.<br> - Optional chaining (`?.`) is used when accessing potentially undefined nested properties.<br> - Nullish coalescing (`??`) provides default values for missing fields.<br> - GitHub user profile information is successfully retrieved and displayed.<br> - Non-200 GitHub responses are handled gracefully.<br> - GitHub API rate limit errors are detected and reported.<br> -  Missing fields do not cause application crashes. |
-| **Stored Data** | None |
+|--------|--------|
+| Description | The checkIfUserIsActive function must accept a User object and return a boolean indicating whether the user is active. |
+| Priority | High |
+| Source | context |
+| Acceptance Criteria | <ul><li>The user parameter is typed as User.</li><li>The function's return type is boolean.</li></ul> |
+| Stored Data | User (isActive) |
 
----
-
-### FR-005 — Application: Store Authentication Data Based on Remember Me Selection
+### FR-005 — Define API Response State Union Type
 
 | Field | Detail |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The application must store authentication data using either localStorage or sessionStorage based on the user's Remember Me selection. |
-| **Priority** | High |
-| **Source** | Assignment 3 |
-| **Acceptance Criteria** | - User must provide a non-empty email value before login. <br>  - Email format should be validated before storing user information. <br> - If Remember Me is checked, user data is stored in localStorage.<br> - If Remember Me is not checked, user data is stored in sessionStorage. <br> - Invalid input should display an appropriate validation message and prevent storage.  |
-| **Stored Data** | User Information |
+|--------|--------|
+| Description | A union type named ApiResponseState must be defined to represent the three possible states of an API response: 'loading', 'success', and 'error'. |
+| Priority | High |
+| Source | context |
+| Acceptance Criteria | <ul><li>The ApiResponseState type is defined as <code>'loading' \| 'success' \| 'error'</code>.</li><li>No other string values are permitted.</li></ul> |
+| Stored Data |  |
 
----
-
-### FR-006 — Application: Restore User Session
+### FR-006 —  Validate Invalid User Object Assignment
 
 | Field | Detail |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The application must restore user information from browser storage when the application loads. |
-| **Priority** | High |
-| **Source** | Assignment 3 |
-| **Acceptance Criteria** | - localStorage is checked first.<br> - sessionStorage is checked second.<br> - Existing users are automatically logged in. <br>- Stale localStorage data older than 30 days must not be restored. <br> - Expired data must be automatically removed. <br> - Invalid or corrupted stored data should be cleared automatically.|
-| **Stored Data** | User Information |
+|--------|--------|
+| Description | The TypeScript compiler must report an error when an object that does not conform to the User interface structure is assigned to a User type. |
+| Priority | High |
+| Source | constraints |
+| Acceptance Criteria | <ul><li>Attempting to assign { id: 1, name: 'John' } to a User variable without email and isActive does not produce an error because they are optional.</li><li>Attempting to assign { name: 'John', email: 'a@b.com' } to a User variable produces a compiler error due to the missing id property.</li><li>Attempting to modify the id property of a User object produces a compiler error.</li><li>Attempting to assign a non-string value to name property produces a compiler error.</li></ul> |
+| Stored Data |  |
 
----
-
-### FR-007 — User: Logout from Application
+### FR-007 —  Validate Invalid formatFullName Call
 
 | Field | Detail |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Description** | The User can log out of the application. |
-| **Priority** | High |
-| **Source** | Assignment 3 |
-| **Acceptance Criteria** | - Logout button is available.<br> - Clicking Logout removes stored user information from localStorage and sessionStorage.<br> -Login screen is displayed again. |
-| **Stored Data** | User Information |
+|--------|--------|
+| Description | The TypeScript compiler must report an error when formatFullName is called with arguments that do not match its defined type signature. |
+| Priority | High |
+| Source | constraints |
+| Acceptance Criteria | <ul><li>Calling formatFullName(123, 'Doe') produces a compiler error because 123 is not a string.</li><li>Calling formatFullName('John') produces a compiler error due to missing the lastName argument.</li></ul> |
+| Stored Data |  |
 
----
-
-#### FR-008 — Application: Handle Asynchronous Operation Errors
+### FR-008 —  Validate Invalid calculateTotalPrice Call
 
 | Field | Detail |
-| ----------------------- | ---------------------------------------------------------------------------------- |
-| **Description** | The application must implement error handling for asynchronous operations. |
-| **Priority** | Critical |
-| **Source** | Assignment 2 & 3 |
-| **Acceptance Criteria** | - try/catch blocks should be used.<br> - Errors are logged with meaningful messages.<br> - User-friendly error messages should be displayed when failures occur. |
-| **Stored Data** | None |
+|--------|--------|
+| Description | The TypeScript compiler must report an error when calculateTotalPrice is called with arguments that do not match its defined type signature. |
+| Priority | High |
+| Source | constraints |
+| Acceptance Criteria | <ul><li>Calling calculateTotalPrice([10, 20], '5%') produces a compiler error because '5%' is not a number.</li><li>Calling calculateTotalPrice([10, '20'], 5) produces a compiler error because '20' is not a number within the items array.</li></ul> |
+| Stored Data |  |
 
----
+### FR-009 —  Validate Invalid checkIfUserIsActive Call
+
+| Field | Detail |
+|--------|--------|
+| Description | The TypeScript compiler must report an error when checkIfUserIsActive is called with an argument that does not conform to the User type. |
+| Priority | High |
+| Source | constraints |
+| Acceptance Criteria | <ul><li>Calling checkIfUserIsActive({ name: 'Jane' }) produces a compiler error because the argument is missing the required id property of a User object.</li><li>Calling checkIfUserIsActive(null) produces a compiler error.</li></ul> |
+| Stored Data |  |
 
 ## 5. Data Specifications
 
-### 5.1. Entities
+### 5.1. Entity: User
 
-| Entity Name | Description | Fields | Storage Mechanism |
-| :---------------------- | :------------------------------------------------------------------ | :--------------------------------------------------------------- | :---------------------------- |
-| **User** | Simulated user returned during Assignment 1. | `id`, `name` | In-memory |
-| **Order** | Simulated order information. | `orderId`, `amount` | In-memory |
-| **Payment** | Simulated payment information. | `paymentId`, `status` | In-memory |
-| **Nested API Response** | Object used for destructuring and optional chaining demonstrations. | `user.profile`, `user.contact`, `user.address` | In-memory |
-| **GitHub User Profile** | Response from GitHub Users API. | `login`, `name`, `company`, `location`, `followers`, `following` | API Response |
-| **User Information** | Stored when Remember Me is enabled or disabled. | `email`, `loginMethod`, `loginTime` , `savedAt` | localStorage / sessionStorage |
+The User entity represents a system user and is defined by the following structure:
 
----
+| Field | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | number | readonly, Required | Unique identifier for the user. |
+| name | string | Required | The full name of the user. |
+| email | string | Optional | The email address of the user. |
+| isActive | boolean | Optional | Indicates whether the user account is active. |
 
-## 6. Security & Compliance Policy
+### 5.2. Type: ApiResponseState
 
-### 6.1. Data Handling & Security
+The ApiResponseState type enumerates the possible states of an asynchronous API operation:
 
-- Browser storage access should be performed safely.
-- Sensitive information such as passwords should never be stored in browser storage.
-- Authentication data stored for demonstration purposes should be removed on logout.
-- Tokens, passwords, and other sensitive credentials must never be stored in browser storage.
-
----
-
-## 7. Async Workflow
-
-The application simulates a sequence of dependent asynchronous operations.
-
-1. Retrieve user information.
-2. Use the user ID to retrieve order information.
-3. Use the order ID to retrieve payment information.
-4. Display the final user, order, and payment data.
-
-The workflow is implemented using:
-- Callback Hell
-- Promise Chaining
-- Async/Await
-
-Each implementation produces the same result while demonstrating different approaches to handling asynchronous operations.
-
----
-
-## 8. Error Handling Strategy
-
-### Error State 1: Missing API Response Data
-
-Cause:
-Expected properties are missing from the API response.
-
-Handling:
-- Use optional chaining (`?.`) to safely access nested properties.
-- Use nullish coalescing (`??`) to provide default values.
-- Prevent runtime errors caused by undefined values.
-
----
-
-### Error State 2: GitHub API Request Failure
-
-Cause:
-Network issues, invalid username, API rate limiting, or non-200 API responses.
-
-Handling:
-- Validate response using `response.ok`.
-- Detect GitHub rate limit responses and surface a clear message.
-- Throw an error for unsuccessful requests, including non-200 status codes.
-- Catch errors using `try/catch`.
-- Log meaningful error messages.
-
----
-
-### Error State 3: Promise Chain Failure
-
-Cause:
-Any asynchronous operation fails during Promise execution.
-
-Handling:
-- Use `.catch()` to capture errors.
-- Stop further execution.
-- Display a user-friendly error message.
-- Log the technical error details for debugging.
-
----
-
-### Error State 4: Async/Await Failure
-
-Cause:
-User, order, or payment retrieval fails.
-
-Handling:
-- Wrap asynchronous operations in `try/catch`.
-- If User retrieval fails, stop the workflow immediately and display a user-friendly "User load failed" message.
-- If Orders retrieval fails, stop the workflow and display a user-friendly "Order load failed" message tied to the retrieved user.
-- If Payments retrieval fails, stop the workflow and display a user-friendly "Payment load failed" message tied to the retrieved order.
-- Log the technical error message for debugging.
-- Prevent application crashes.
-
----
-
-## 9. Storage Strategy
+| Value | Type | Description |
+|--------|------|-------------|
+| 'loading' | string literal | Indicates that an API call is in progress. |
+| 'success' | string literal | Indicates that an API call completed successfully. |
+| 'error' | string literal | Indicates that an API call encountered an error. |
 
 
-### Storage Key Constants
+## 5.3. Type Definitions 
 
-- `USER_STORAGE_KEY = "user"` — the key used to store user information in both localStorage and sessionStorage. It contains a serialized JSON object representing the authenticated user, including `email`, `loginMethod`, `loginTime` and `savedAt`.
+### Interface: User
 
-User Information:
-- email: string
-- loginMethod: "localStorage" | "sessionStorage"
-- loginTime: number
-- savedAt: number
+```typescript
+interface User {
+  readonly id: number;
+  name: string;
+  email?: string;
+  isActive?: boolean;
+}
+```
+
+
+| Field    | Type    | Required | Description            | Reason                                                                                    |
+| -------- | ------- | -------- | ---------------------- | ----------------------------------------------------------------------------------------- |
+| id       | number  | Yes      | Unique user identifier | Required for object identity and marked `readonly` to prevent modification after creation |
+| name     | string  | Yes      | User display name      | Core user information required in all User objects                                        |
+| email    | string  | No       | User email address     | Optional because a user may exist without an email                                        |
+| isActive | boolean | No       | User active status     | Optional because status may be assigned later                                             |
+
+### Type: ApiResponseState
+
+```typescript
+type ApiResponseState =
+  | "loading"
+  | "success"
+  | "error";
+```
+
+Reason:
+Only three valid API lifecycle states are required by the assignment.
+Restricting values through a union type prevents invalid states.
+
+
+| Value     | Description                        |
+| --------- | ---------------------------------- |
+| "loading" | API request is in progress         |
+| "success" | API request completed successfully |
+| "error"   | API request failed                 |
+
+
+### Function Signatures
+
+```typescript
+function formatFullName(
+  firstName: string,
+  lastName: string
+): string;
+
+function calculateTotalPrice(
+  items: number[],
+  discount: number
+): number;
+
+function checkIfUserIsActive(
+  user: User
+): boolean;
+```
+
+
+-   **Key Invariants / Business Rules**:
+    *   `formatFullName`: Requires two `string` arguments (`firstName`, `lastName`) and returns a `string`.
+    *   `calculateTotalPrice`: Requires an array of `number`s (`items`) and a `number` (`discount`), returning a `number`.
+    *   `checkIfUserIsActive`: Requires an argument conforming to the `User` interface and returns a `boolean`.
+
+
+## 6. Expected TypeScript Compiler Errors
+
+#### 1. Invalid User Object
+
+```typescript
+const user: User = {
+  name: "John"
+};
+```
+
+Expected Compiler Error:
+
+```text
+Property 'id' is missing in type '{ name: string; }' but required in type 'User'.
+```
 
 ---
 
-### LocalStorage
+#### 2. Readonly Property Modification
 
-Purpose: Store user information when the "Remember Me" option is selected.
+```typescript
+const user: User = {
+  id: 1,
+  name: "John"
+};
 
-Storage Key: `user`  
+user.id = 2;
+```
 
-Stored Data: User Information
+Expected Compiler Error:
 
-Reason: Data persists even after the browser is closed and reopened, allowing users to remain logged in.
-
----
-
-### SessionStorage
-
-Purpose: Store user information when the "Remember Me" option is not selected.
-
-Storage Key: `user`
-
-Stored Data: User Information
-
-Reason: Data remains available only for the current browser session and is cleared when the browser tab is closed.
+```text
+Cannot assign to 'id' because it is a read-only property.
+```
 
 ---
 
-### Storage Retrieval
+#### 3. Invalid Function Argument
 
-On application startup:
+```typescript
+formatFullName(123, "Doe");
+```
 
-1. Check localStorage for existing user information.
-2. If no data exists, check sessionStorage.
-3. Restore the user session if stored data is found.
-4. If user data exists in both localStorage and sessionStorage, prefer localStorage and restore from it.
-5. If stored data is invalid or corrupted (e.g. not valid JSON or missing required user fields), clear the invalid data and do not restore the session.
-6. If localStorage user data is stale or outdated based on a defined expiration threshold, clear it and require a fresh login.
+Expected Compiler Error:
 
----
-
-### Storage Cleanup
-
-On logout:
-
-1. Remove user information from localStorage.
-2. Remove user information from sessionStorage.
-3. Return the user to the login screen.
+```text
+Argument of type 'number' is not assignable to parameter of type 'string'.
+```
 
 ---
 
-### Storage Data Expiration & Cleanup Strategy
+#### 4. Missing Function Argument
 
-To prevent outdated user sessions from persisting indefinitely, the application implements an automatic cleanup strategy for stale data.
+```typescript
+formatFullName("John");
+```
 
-**Data Expiration Threshold:**
-- User data stored in localStorage expires after **30 days** of inactivity.
-- Each stored user record includes a `savedAt` timestamp (in milliseconds since epoch).
+Expected Compiler Error:
 
-**Stale Data Detection:**
-On application startup and during user retrieval:
-1. Check if the stored user data has a `savedAt` property.
-2. Calculate the elapsed time: `Date.now() - savedAt`.
-3. If elapsed time exceeds 30 days (30 × 24 × 60 × 60 × 1000 milliseconds), consider the data stale.
-
-**Stale Data Removal:**
-- Automatically remove stale user data from localStorage.
-- Require the user to log in again with current credentials.
-- Do not restore the session for expired data.
-
-**Corrupted Data Handling:**
-- If stored data is invalid JSON or contains invalid data structures, remove it.
-- Clear both localStorage and sessionStorage entries if corruption is detected.
-- Log the error for debugging purposes.
-- Require a fresh login.
+```text
+Expected 2 arguments, but got 1.
+```
 
 ---
 
-## 10. Supported Environment & Browser Compatibility
+#### 5. Invalid Discount Type
 
-### Runtime Environment
+```typescript
+calculateTotalPrice([10, 20], "5%");
+```
 
-- Modern web browser with JavaScript enabled.
-- React application executed in a browser environment.
-- Internet connection required for GitHub Users API requests.
+Expected Compiler Error:
 
-### JavaScript Requirements
+```text
+Argument of type 'string' is not assignable to parameter of type 'number'.
+```
 
-The browser must support ES6+ features used by the application, including:
+---
 
-- Arrow Functions
-- Promises
-- async/await
-- Destructuring
-- Optional Chaining (`?.`)
-- Nullish Coalescing (`??`)
-- localStorage
-- sessionStorage
-- Fetch API
+#### 6. Invalid Array Element Type
 
-### Unsupported Environments
+```typescript
+calculateTotalPrice([10, "20"], 5);
+```
 
-The following environments are outside the scope of this assignment:
+Expected Compiler Error:
 
-- Internet Explorer
-- Legacy browsers without ES6+ support
-- Server-side execution environments without browser storage APIs
+```text
+Type 'string' is not assignable to type 'number'.
+```
+
+---
+
+#### 7. Missing Required User Property
+
+```typescript
+checkIfUserIsActive({
+  name: "Jane"
+});
+```
+
+Expected Compiler Error:
+
+```text
+Property 'id' is missing in type '{ name: string; }' but required in type 'User'.
+```
+
+---
+
+#### 8. Null Passed Instead of User
+
+```typescript
+checkIfUserIsActive(null);
+```
+
+Expected Compiler Error:
+
+```text
+Argument of type 'null' is not assignable to parameter of type 'User'.
+```
+
+---
+
+#### 9. Invalid Union Type Value
+
+```typescript
+const state: ApiResponseState = "pending";
+```
+
+Expected Compiler Error:
+
+```text
+Type '"pending"' is not assignable to type 'ApiResponseState'.
+```
+
