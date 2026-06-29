@@ -1,5 +1,7 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 
+const AUTH_TOKEN_KEY = "authToken";
+
 type AuthContextType = {
   isLoggedIn: boolean;
   login: () => void;
@@ -14,16 +16,16 @@ type AuthProviderProps = {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    () => localStorage.getItem("isLoggedIn") === "true"
+    () => Boolean(localStorage.getItem(AUTH_TOKEN_KEY))
   );
 
   const login = () => {
-    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem(AUTH_TOKEN_KEY, "demo-token");
     setIsLoggedIn(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem(AUTH_TOKEN_KEY);
     setIsLoggedIn(false);
   };
 
