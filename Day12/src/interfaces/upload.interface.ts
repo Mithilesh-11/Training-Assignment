@@ -21,6 +21,7 @@ export interface UploadResponse {
   fileName: string;
   mimeType: string;
   size: number;
+  resourceType: string;
 }
 
 export interface ApiSuccessResponse<T> {

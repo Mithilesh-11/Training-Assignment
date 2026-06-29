@@ -3,22 +3,7 @@ import { generateFolder } from "../utils/generateFolder.js";
 import { generateFilename } from "../utils/generateFilename.js";
 import { CloudinaryService } from "./cloudinary.service.js";
 import { RetryService } from "./retry.service.js";
-
-interface UploadOptions {
-  file: Express.Multer.File;
-  userId: number;
-}
-
-interface UploadResponse {
-  url: string;
-  publicId: string;
-  folder: string;
-  originalName: string;
-  fileName: string;
-  mimeType: string;
-  size: number;
-  resourceType: string;
-}
+import type { UploadOptions, UploadResponse, UploadCategory } from "../interfaces/upload.interface.js";
 
 export class UploadService {
   private readonly cloudinaryService =new CloudinaryService();
@@ -28,20 +13,20 @@ export class UploadService {
    * Upload Profile Image
    */
   async uploadProfile(options: UploadOptions): Promise<UploadResponse> {
-    return this.upload( options,"profile" );
+    return this.upload(options, "profile");
   }
 
   /**
    * Upload Document
    */
   async uploadDocument(options: UploadOptions): Promise<UploadResponse> {
-    return this.upload(options,"document");
+    return this.upload(options, "document");
   }
 
   /**
    * Common Upload Logic
    */
-  private async upload(options: UploadOptions,category: "profile" | "document"): Promise<UploadResponse> {
+  private async upload(options: UploadOptions, category: UploadCategory): Promise<UploadResponse> {
     const { file, userId } = options;
 
     if (!file) {

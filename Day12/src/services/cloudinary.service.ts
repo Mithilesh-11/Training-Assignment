@@ -1,11 +1,6 @@
 import { UploadApiResponse } from "cloudinary";
 import cloudinary from "../config/cloudinary.js";
-
-interface UploadFileOptions {
-  file: Express.Multer.File;
-  folder: string;
-  filename: string;
-}
+import type { UploadFileOptions } from "../interfaces/upload.interface.js";
 
 export class CloudinaryService {
 

@@ -14,13 +14,10 @@ export const uploadProfile = async (req: Request, res: Response, next: NextFunct
       throw new AppError("No file uploaded.", 400);
     }
 
-    /**
-     * Temporary user ID.
-     * Replace this after authentication.
-     */
-    const userId = 1;
+    // Use authenticated user id when available
+    const userId = req.user?.id || 1;
 
-    const result = await uploadService.uploadProfile({file: req.file,userId,});
+    const result = await uploadService.uploadProfile({ file: req.file, userId });
 
     res.status(200).json({
       success: true,
@@ -42,11 +39,7 @@ export const uploadDocument = async (req: Request,res: Response,next: NextFuncti
       throw new AppError("No file uploaded.", 400);
     }
 
-    /**
-     * Temporary user ID.
-     * Replace after authentication.
-     */
-    const userId = 1;
+       const userId = req.user?.id || 1;
 
     const result = await uploadService.uploadDocument({
       file: req.file,

@@ -95,4 +95,82 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/InternalServerError'
+ *
+ * components:
+ *   schemas:
+ *     UploadResponse:
+ *       type: object
+ *       required:
+ *         - success
+ *         - message
+ *         - data
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: true
+ *         message:
+ *           type: string
+ *           example: Profile image uploaded successfully.
+ *         data:
+ *           type: object
+ *           properties:
+ *             url:
+ *               type: string
+ *               format: uri
+ *             publicId:
+ *               type: string
+ *             folder:
+ *               type: string
+ *             originalName:
+ *               type: string
+ *             fileName:
+ *               type: string
+ *             mimeType:
+ *               type: string
+ *             size:
+ *               type: integer
+ *             resourceType:
+ *               type: string
+ *
+ *     ValidationError:
+ *       type: object
+ *       required:
+ *         - success
+ *         - message
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: false
+ *         message:
+ *           type: string
+ *           example: Validation failed for the request payload.
+ *         errors:
+ *           type: object
+ *           description: Field-specific validation error messages
+ *
+ *     FileTooLargeError:
+ *       type: object
+ *       required:
+ *         - success
+ *         - message
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: false
+ *         message:
+ *           type: string
+ *           example: Uploaded file exceeds the maximum allowed size.
+ *
+ *     InternalServerError:
+ *       type: object
+ *       required:
+ *         - success
+ *         - message
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: false
+ *         message:
+ *           type: string
+ *           example: An unexpected error occurred.
  */
