@@ -26,7 +26,8 @@ export class ContactService {
 
 
   async createContact( data: ContactInput) {
-    const existingContact = this.repository.findByEmail( data.email );
+    const normalizedEmail = data.email.toLowerCase();
+    const existingContact = this.repository.findByEmail( normalizedEmail );
 
     if (existingContact) {
       throw new ConflictError( "A contact already exists with this email address." );
@@ -35,7 +36,7 @@ export class ContactService {
     const newContact: Contact = {
       id: uuid(),
       name: data.name,
-      email: data.email,
+      email: normalizedEmail,
       phone: data.phone,
       address: data.address,
       internalNotes: "Created by system",
@@ -58,15 +59,21 @@ export class ContactService {
       throw new NotFoundError( "The contact with the requested ID does not exist." );
     }
 
-    if (data.email && data.email !== existingContact.email ) {
-      const emailExists = this.repository.findByEmail( data.email );
+    if (data.email && data.email.toLowerCase() !== existingContact.email.toLowerCase() ) {
+      const normalizedEmail = data.email.toLowerCase();
+      const emailExists = this.repository.findByEmail( normalizedEmail );
 
       if (emailExists) {
         throw new ConflictError( "A contact already exists with this email address." );
       }
     }
 
-    const updatedContact =  this.repository.update(id,data);
+    const updatedData = { ...data };
+    if (data.email) {
+      updatedData.email = data.email.toLowerCase();
+    }
+
+    const updatedContact =  this.repository.update(id, updatedData);
      if (!updatedContact) {
     throw new NotFoundError(
       "The contact with the requested ID does not exist."

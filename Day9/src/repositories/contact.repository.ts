@@ -17,7 +17,7 @@ export class ContactRepository {
 
   findByEmail(email: string): Contact | undefined {
     return contacts.find(
-      (contact) =>contact.email === email && !contact.deletedAt
+      (contact) => contact.email.toLowerCase() === email.toLowerCase() && !contact.deletedAt
     );
   }
 
