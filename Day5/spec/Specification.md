@@ -335,9 +335,12 @@ enum Direction {
 
 # 7. Expected TypeScript Compiler Errors
 
+These examples can be used to verify the expected compiler errors during compilation by adding them to a TypeScript file with `@ts-expect-error` comments.
+
 ### 1. Invalid ApiResponse Data Shape
 
 ```typescript
+// @ts-expect-error - Property 'name' is missing in type '{ id: number; }'
 const response: ApiResponse<User> = {
   success: true,
   data: {
@@ -359,6 +362,7 @@ but required in type 'User'.
 ### 2. Invalid UserPreview Property
 
 ```typescript
+// @ts-expect-error - Object literal may only specify known properties
 const preview: UserPreview = {
   id: 1,
   email: "test@test.com"
@@ -376,6 +380,9 @@ Object literal may only specify known properties.
 ### 3. Accessing Password From UserPreview
 
 ```typescript
+const preview: UserPreview = { id: 1, name: "John" };
+
+// @ts-expect-error - Property 'password' does not exist on type 'UserPreview'
 preview.password;
 ```
 
@@ -390,6 +397,7 @@ Property 'password' does not exist on type 'UserPreview'.
 ### 4. Invalid Enum Value
 
 ```typescript
+// @ts-expect-error - Type '"LEFT"' is not assignable to type 'Direction'
 const direction: Direction =
   "LEFT";
 ```
@@ -407,6 +415,7 @@ Type '"LEFT"' is not assignable to type 'Direction'.
 ```typescript
 const result: ApiResult<User> = response;
 
+// @ts-expect-error - Property 'error' does not exist on type 'ApiResult<User>'
 console.log(result.error);
 ```
 
@@ -421,6 +430,7 @@ Property 'error' does not exist on type 'ApiResult<User>'.
 ### 6. Invalid Type Guard Return
 
 ```typescript
+// @ts-expect-error - Type 'string' is not assignable to type 'boolean'
 function isErrorResponse(
   data: ApiResult<User>
 ): string {
