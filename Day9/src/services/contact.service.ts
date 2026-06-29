@@ -67,8 +67,13 @@ export class ContactService {
     }
 
     const updatedContact =  this.repository.update(id,data);
+     if (!updatedContact) {
+    throw new NotFoundError(
+      "The contact with the requested ID does not exist."
+    );
+  }
 
-    return ContactSerializer.serialize( updatedContact!);
+    return ContactSerializer.serialize( updatedContact);
   }
 
 

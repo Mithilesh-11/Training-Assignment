@@ -1,13 +1,23 @@
 import {Request,Response, NextFunction} from "express";
+import { AppError } from "../errors/custom-errors";
 
-export const errorMiddleware = ( error: any, req: Request,res: Response,next: NextFunction) => {
-  const status = error.status || 500;
-  const code = error.code ||"INTERNAL_SERVER_ERROR";
-  const message = status >= 500 
-    ? "An unexpected error occurred while processing the request."
-    : error.message || "Bad request.";
+export const errorMiddleware = (error: unknown,req: Request,res: Response,next: NextFunction) => {
+  let status = 500;
+  let code = "INTERNAL_SERVER_ERROR";
+  let message ="An unexpected error occurred while processing the request.";
 
-    // Log the error on the server for debugging
+  if (error instanceof AppError) {
+    status = error.status;
+    code = error.code;
+    message = error.message;
+  } else if (error instanceof Error) {
+    // Unexpected runtime error
+    message =
+      status >= 500
+        ? "An unexpected error occurred while processing the request."
+        : error.message;
+  }
+
   console.error(`[Error] ${req.method} ${req.url}:`, error);
 
   return res.status(status).json({
@@ -16,7 +26,7 @@ export const errorMiddleware = ( error: any, req: Request,res: Response,next: Ne
     error: {
       status,
       code,
-      message
-    }
+      message,
+    },
   });
 };

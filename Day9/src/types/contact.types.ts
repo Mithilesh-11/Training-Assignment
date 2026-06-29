@@ -26,3 +26,11 @@ export interface ApiErrorResponse {
     message: string;
   };
 }
+
+export interface ContactResponseDto {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}

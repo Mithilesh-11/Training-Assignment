@@ -57,8 +57,13 @@ export class ContactRepository {
       return false;
     }
 
-    contact.deletedAt = new Date();
 
+  const now = new Date();
+
+  contact.deletedAt = now;
+  contact.updatedAt = now;
+  contact.version += 1;
+  
     return true;
   }
 }

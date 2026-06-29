@@ -1,5 +1,7 @@
 import { Contact } from "../types/contact.types";
 
+
+//  In-memory array - this is for learning  purposes
 export const contacts: Contact[] = [
   {
     id: "cnt_001",
