@@ -12,9 +12,11 @@ export interface Contact {
   phone?: string;
 }
 
+export type RequestStatus = "idle" | "loading" | "succeeded" | "failed";
+
 export interface ContactsState {
   contacts: Contact[];
-  loading: boolean;
+  status: RequestStatus;
   error: string | null;
 }
 

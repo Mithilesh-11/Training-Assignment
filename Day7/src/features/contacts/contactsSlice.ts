@@ -14,7 +14,7 @@ export const fetchContacts = createAsyncThunk("contacts/fetchContacts",
 
 const initialState: ContactsState ={
     contacts: [],
-    loading: false,
+    status: "idle",
     error: null,
   };
 
@@ -27,7 +27,7 @@ const contactsSlice =createSlice({
       builder.addCase(
           fetchContacts.pending,
           (state) => {
-            state.loading = true;
+            state.status = "loading";
             state.error = null;
           }
         )
@@ -38,7 +38,7 @@ const contactsSlice =createSlice({
             state,
             action
           ) => {
-            state.loading = false;
+            state.status = "succeeded";
             state.contacts =
               action.payload;
           }
@@ -50,7 +50,7 @@ const contactsSlice =createSlice({
             state,
             action
           ) => {
-            state.loading = false;
+            state.status = "failed";
             state.error =
               action.error.message ??
               "Failed to fetch contacts";

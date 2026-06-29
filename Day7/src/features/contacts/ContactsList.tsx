@@ -8,7 +8,7 @@ export default function ContactsList() {
   const dispatch = useDispatch<AppDispatch>();
   const {
     contacts,
-    loading,
+    status,
     error,
   } = useSelector(
     (state: RootState) =>
@@ -19,7 +19,7 @@ export default function ContactsList() {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  if (loading)
+  if (status === "loading")
     return (
       <p>Loading contacts...</p>
     );
