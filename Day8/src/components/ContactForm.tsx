@@ -37,6 +37,8 @@ function ContactForm () {
 
     if (!vals.phone.trim()) {
       errs.phone = "Phone is required";
+    } else if (!/^\d{10}$/.test(vals.phone.trim())) {
+      errs.phone = "Phone number must be exactly 10 digits";
     }
 
     return errs;
@@ -52,8 +54,9 @@ function ContactForm () {
     }
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const validationErrors = validate(values);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -71,6 +74,7 @@ function ContactForm () {
       <div className="contact-form contact-form--success">
         <p>Contact added successfully!</p>
         <button
+          type="button"
           className="btn btn--secondary"
           onClick={() => setSubmitted(false)}
         >
@@ -81,7 +85,7 @@ function ContactForm () {
   }
 
   return (
-    <div className="contact-form">
+    <form className="contact-form" onSubmit={handleSubmit}>
       <h2 className="contact-form__title">Add Contact</h2>
 
       <div className="contact-form__field">
@@ -92,7 +96,9 @@ function ContactForm () {
           id="name"
           name="name"
           type="text"
-          className={`contact-form__input ${errors.name ? "contact-form__input--error" : ""}`}
+          className={`contact-form__input ${
+            errors.name ? "contact-form__input--error" : ""
+          }`}
           value={values.name}
           onChange={handleChange}
           placeholder="Full name"
@@ -112,7 +118,9 @@ function ContactForm () {
           id="email"
           name="email"
           type="email"
-          className={`contact-form__input ${errors.email ? "contact-form__input--error" : ""}`}
+          className={`contact-form__input ${
+            errors.email ? "contact-form__input--error" : ""
+          }`}
           value={values.email}
           onChange={handleChange}
           placeholder="Email address"
@@ -132,7 +140,9 @@ function ContactForm () {
           id="phone"
           name="phone"
           type="tel"
-          className={`contact-form__input ${errors.phone ? "contact-form__input--error" : ""}`}
+          className={`contact-form__input ${
+            errors.phone ? "contact-form__input--error" : ""
+          }`}
           value={values.phone}
           onChange={handleChange}
           placeholder="Phone number"
@@ -144,11 +154,11 @@ function ContactForm () {
         )}
       </div>
 
-      <button className="btn btn--primary" onClick={handleSubmit}>
+      <button type="submit" className="btn btn--primary">
         Submit
       </button>
-    </div>
+    </form>
   );
-};
+}
 
 export default ContactForm;

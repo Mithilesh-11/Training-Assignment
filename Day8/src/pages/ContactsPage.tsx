@@ -1,23 +1,29 @@
-import { useState } from "react";
+import { useState , useMemo} from "react";
 import useFetch from "../hooks/useFetch";
 import useDebounce from "../hooks/useDebounce";
 import UserCard from "../components/UserCard";
 import SearchBar from "../components/SearchBar";
 import ContactForm from "../components/ContactForm";
 import { Contact } from "../types";
+import { SEARCH_DEBOUNCE_DELAY } from "../Constant.tsx/delay";
+
 
 function ContactsPage () {
   const { data, loading, error, retry } = useFetch<Contact[]>("https://jsonplaceholder.typicode.com/users");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showForm, setShowForm] = useState<boolean>(false);
-  const debouncedQuery = useDebounce(searchQuery, 500);
+  const debouncedQuery = useDebounce(searchQuery, SEARCH_DEBOUNCE_DELAY);
 
-  const filteredContacts = (data ?? []).filter(
+const filteredContacts = useMemo(() => {
+  const query = debouncedQuery.toLowerCase();
+
+  return (data ?? []).filter(
     (contact) =>
-      contact.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
-      contact.email.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
-      contact.phone.toLowerCase().includes(debouncedQuery.toLowerCase())
+      contact.name.toLowerCase().includes(query) ||
+      contact.email.toLowerCase().includes(query) ||
+      contact.phone.toLowerCase().includes(query)
   );
+}, [data, debouncedQuery]);
 
   return (
     <div className="contacts-page">
