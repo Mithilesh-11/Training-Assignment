@@ -23,3 +23,13 @@ export interface UseFetchResult<T> {
   loading: boolean;
   error: string | null;
 }
+
+export interface Post {
+  id: number;
+  title: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+}

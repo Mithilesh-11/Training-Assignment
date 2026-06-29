@@ -5,12 +5,20 @@ import type { RootState } from "../../app/store";
 
 export default function ContactDetails() {
   const { id } = useParams();
+      
+      if (!id || !/^\d+$/.test(id)) {
+      return (
+        <div className="border rounded-lg p-6">
+          Invalid Contact ID
+        </div>
+      );
+    }
 
-  const contact =useSelector(
-      (state: RootState) =>
-        state.contacts.contacts.find((c) => c.id === Number(id)
-        )
-    );
+  const contactId = Number(id);
+
+  const contact = useSelector((state: RootState) =>
+    state.contacts.contacts.find((c) => c.id === contactId)
+  );
 
   if (!contact) {
     return (

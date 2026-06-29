@@ -4,6 +4,9 @@ import type {Contact,ContactsState,} from "../../types";
 export const fetchContacts = createAsyncThunk("contacts/fetchContacts",
     async () => {
       const response = await fetch("https://jsonplaceholder.typicode.com/users");
+      if (!response.ok) {
+      throw new Error(`Failed to fetch contacts: ${response.status}`);
+    }
       const data = await response.json();
       return data as Contact[];
     }

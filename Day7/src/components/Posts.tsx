@@ -1,9 +1,6 @@
 import { useFetch } from "../hooks/useFetch";
+import type { Post} from "../types"
 
-interface Post {
-  id: number;
-  title: string;
-}
 
 export default function Posts() {
   const {

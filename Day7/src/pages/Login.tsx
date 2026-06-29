@@ -3,22 +3,19 @@ import { useState } from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    alert(
-      `Login Attempt\nEmail: ${email}`
-    );
+    setMessage(`Login successful! Email: ${email}`);
   };
 
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
       <div className="w-full max-w-md border rounded-xl p-8 shadow-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">
-            Login
-          </h1>
+          <h1 className="text-3xl font-bold">Login</h1>
 
           <p className="text-gray-500 mt-2">
             Sign in to continue
@@ -37,11 +34,7 @@ export default function Login() {
             <input
               type="email"
               value={email}
-              onChange={(e) =>
-                setEmail(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="john@example.com"
               className="w-full border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-gray-400"
               required
@@ -56,11 +49,7 @@ export default function Login() {
             <input
               type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               className="w-full border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-gray-400"
               required
@@ -74,6 +63,12 @@ export default function Login() {
             Sign In
           </button>
         </form>
+
+        {message && (
+          <div className="mt-4 rounded-lg border border-green-300 bg-green-50 p-3 text-green-700">
+            {message}
+          </div>
+        )}
 
         <div className="mt-6 text-center text-sm text-gray-500">
           Demo Login Page

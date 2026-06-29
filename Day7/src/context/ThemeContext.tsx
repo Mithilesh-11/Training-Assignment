@@ -1,4 +1,4 @@
-import {createContext,type ReactNode,useContext,useState,} from "react";
+import {createContext,type ReactNode,useContext,useState, useMemo  ,useCallback} from "react";
 import type { Theme, ThemeContextType,} from "../types";
 
 const ThemeContext = createContext< ThemeContextType | undefined>(undefined);
@@ -10,16 +10,22 @@ interface Props {
 export function ThemeProvider({children}: Props) {
   const [theme, setTheme] = useState<Theme>("light");
 
-  const toggleTheme = () => {
-    setTheme((prev) =>
-      prev === "light"
-        ? "dark"
-        : "light"
-    );
-  };
+
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    }, []);
+    
+   const value = useMemo(
+    () => ({
+      theme,
+      toggleTheme,
+    }),
+    [theme]
+  );
 
   return (
-    <ThemeContext.Provider value={{theme, toggleTheme,}} >
+    <ThemeContext.Provider value={value} >
       {children}
     </ThemeContext.Provider>
   )

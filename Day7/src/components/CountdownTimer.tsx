@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const Start_Time = 60;
+import Start_Time from "./Constant"
 
 export default function CountdownTimer() {
   const [time, setTime] = useState(Start_Time);

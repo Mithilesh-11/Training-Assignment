@@ -1,9 +1,5 @@
 import { useFetch } from "../hooks/useFetch";
-
-interface User {
-  id: number;
-  name: string;
-}
+import type {User} from "../types"
 
 export default function Users() {
   const {

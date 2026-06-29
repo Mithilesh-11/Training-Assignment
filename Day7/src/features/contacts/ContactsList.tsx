@@ -17,7 +17,7 @@ export default function ContactsList() {
 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, []);
+  }, [dispatch]);
 
   if (loading)
     return (
