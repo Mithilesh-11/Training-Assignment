@@ -6,11 +6,11 @@ import { ValidationError } from "../errors/custom-errors";
 export class ContactController {
   constructor(private service: ContactService) {}
 
-  getAllContacts = (req: Request,res: Response,next: NextFunction) => {
+  getAllContacts = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
     try {
-      const contacts = this.service.getAllContacts();
+      const contacts = await this.service.getAllContacts();
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         data: contacts,
         error: null
@@ -20,7 +20,7 @@ export class ContactController {
     }
   };
 
-  getContactById = (req: Request,res: Response,next: NextFunction) => {
+  getContactById = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
     try {
     
     const { id } = req.params;
@@ -28,9 +28,9 @@ export class ContactController {
     if ( typeof id !== 'string') {
       throw new ValidationError("Invalid ID parameter provided.");
     }
-      const contact = this.service.getContactById(id);
+      const contact = await this.service.getContactById(id);
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         data: contact,
         error: null
@@ -40,7 +40,7 @@ export class ContactController {
     }
   };
 
-  createContact = (req: Request,res: Response, next: NextFunction) => {
+  createContact = async (req: Request,res: Response, next: NextFunction): Promise<void> => {
     try {
       const validation = contactSchema.safeParse(req.body);
 
@@ -49,9 +49,9 @@ export class ContactController {
         );
       }
 
-      const contact = this.service.createContact(validation.data);
+      const contact = await this.service.createContact(validation.data);
 
-      return res.status(201).json({
+      res.status(201).json({
         success: true,
         data: contact,
         error: null
@@ -61,7 +61,7 @@ export class ContactController {
     }
   };
 
-  updateContact = ( req: Request, res: Response, next: NextFunction) => {
+  updateContact = async ( req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const validation = updateContactSchema.safeParse(req.body );
 
@@ -78,9 +78,9 @@ export class ContactController {
      if ( typeof id !== 'string') {
       throw new ValidationError("Invalid ID parameter provided.");
     }
-      const contact = this.service.updateContact( id,validation.data);
+      const contact = await this.service.updateContact( id,validation.data);
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         data: contact,
         error: null
@@ -90,15 +90,15 @@ export class ContactController {
     }
   };
 
-  deleteContact = (req: Request, res: Response, next: NextFunction ) => {
+  deleteContact = async (req: Request, res: Response, next: NextFunction ): Promise<void> => {
     try {   
      const { id } = req.params;
      if ( typeof id !== 'string') {
       throw new ValidationError("Invalid ID parameter provided.");
      }
-      this.service.deleteContact(id);
+      await this.service.deleteContact(id);
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         data: null,
         error: null

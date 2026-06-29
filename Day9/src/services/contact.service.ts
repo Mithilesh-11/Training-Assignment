@@ -9,12 +9,12 @@ import { ConflictError, NotFoundError} from "../errors/custom-errors";
 export class ContactService {
   private repository = new ContactRepository();
 
-    getAllContacts() {
+    async getAllContacts() {
         const contacts = this.repository.findAll();
         return ContactSerializer.serializeMany( contacts );
     }
 
-    getContactById(id: string) {
+    async getContactById(id: string) {
         const contact = this.repository.findById(id);
 
         if (!contact) {
@@ -25,7 +25,7 @@ export class ContactService {
     }
 
 
-  createContact( data: ContactInput) {
+  async createContact( data: ContactInput) {
     const existingContact = this.repository.findByEmail( data.email );
 
     if (existingContact) {
@@ -52,7 +52,7 @@ export class ContactService {
 
 
 
-  updateContact( id: string,data: UpdateContactInput) {
+  async updateContact( id: string,data: UpdateContactInput) {
     const existingContact = this.repository.findById(id);
     if (!existingContact) {
       throw new NotFoundError( "The contact with the requested ID does not exist." );
@@ -72,7 +72,7 @@ export class ContactService {
   }
 
 
-    deleteContact(id: string) {
+    async deleteContact(id: string) {
      const deleted = this.repository.delete(id);
         if (!deleted) {
           throw new NotFoundError( "The contact with the requested ID does not exist." );
