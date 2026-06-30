@@ -1,17 +1,21 @@
 import express from "express";
-import contactRoutesV1 from "./routes/contact.routes";
-import contactRoutesV2 from "./routes/v2/contact.routes";
+import { createContactRoutes } from "./routes/contact.routes";
+import { createContactRoutesV2 } from "./routes/v2/contact.routes";
 import reportsRoutesV2 from "./routes/v2/reports.routes";
 import { loggerMiddleware } from "./middleware/logger.middleware";
 import { errorMiddleware } from "./middleware/error.middleware";
+import { ContactService } from "./services/contact.service";
+import { ContactServiceV2 } from "./services/v2/contact.service";
 
 const app = express();
+const contactService = new ContactService();
+const contactServiceV2 = new ContactServiceV2();
 
 app.use(express.json());
 app.use(loggerMiddleware);
 
-app.use("/api/v1", contactRoutesV1);
-app.use("/api/v2", contactRoutesV2);
+app.use("/api/v1", createContactRoutes(contactService));
+app.use("/api/v2", createContactRoutesV2(contactServiceV2));
 app.use("/api/v2", reportsRoutesV2);
 
 app.get("/", (_req, res) => {
