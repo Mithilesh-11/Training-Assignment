@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+}
+
+
+model User {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  name      String   @db.VarChar(100)
+  email     String   @unique(map: "idx_users_email") @db.VarChar(255)
+  password  String   @db.VarChar(255)
+
+  wallet    Wallet?
+  orders    Order[]
+
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(3)
+
+  @@map("users")
+}
+
+model Wallet {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  userId    Int      @unique @db.UnsignedInt
+  balance   Decimal  @db.Decimal(12, 2)
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(3)
+
+  @@map("wallet")
+}
+
+model Product {
+  id         Int         @id @default(autoincrement()) @db.UnsignedInt
+  name       String      @db.VarChar(255)
+  price      Decimal     @db.Decimal(12, 2)
+  stock      Int
+  isActive   Boolean     @default(true)
+  orderItems OrderItem[]
+
+  createdAt  DateTime    @default(now()) @db.DateTime(3)
+  updatedAt  DateTime    @default(now()) @updatedAt @db.DateTime(3)
+
+  // INDEX 2: Product Name Index (Removed stock index, kept only name)
+  @@index([name], map: "idx_products_name")
+  @@map("products")
+}
+
+model Order {
+  id          Int         @id @default(autoincrement()) @db.UnsignedInt
+  userId      Int         @db.UnsignedInt
+  totalAmount Decimal     @db.Decimal(12, 2)
+  status      OrderStatus @default(PENDING)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+  orderItems  OrderItem[]
+
+  createdAt   DateTime    @default(now()) @db.DateTime(3)
+  updatedAt   DateTime    @default(now()) @updatedAt @db.DateTime(3)
+
+  // INDEX 3: Composite Order Index using exactly two columns with descending sort
+  @@index([userId, createdAt(sort: Desc)], map: "idx_orders_user_created")
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  orderId   Int      @db.UnsignedInt
+  productId Int      @db.UnsignedInt
+  quantity  Int
+  price     Decimal  @db.Decimal(12, 2)
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(3)
+
+  // Cleaned: Removed explicit index declarations here to match your 4-index limit rule
+  @@map("order_items")
+}
