@@ -41,13 +41,14 @@ export class ContactServiceV2 {
 
   // ─── Create contact ──────────────────────────────────────────────────
   async createContact(data: ContactInput): Promise<SerializedContact> {
-    const existing = await this.repo.findByEmail(data.email);
+    const normalizedEmail = data.email.trim().toLowerCase();
+    const existing = await this.repo.findByEmail(normalizedEmail);
     if (existing) {
       throw new ConflictError("A contact already exists with this email address.");
     }
 
     const id = uuid();
-    const created = await this.repo.create(id, data);
+    const created = await this.repo.create(id, { ...data, email: normalizedEmail });
     return ContactSerializer.serialize(created);
   }
 
@@ -59,14 +60,18 @@ export class ContactServiceV2 {
       throw new NotFoundError("The contact with the requested ID does not exist.");
     }
 
-    if (data.email && data.email !== existing.email) {
-      const emailTaken = await this.repo.findByEmail(data.email);
+    if (data.email && data.email.trim().toLowerCase() !== existing.email.trim().toLowerCase()) {
+      const normalizedEmail = data.email.trim().toLowerCase();
+      const emailTaken = await this.repo.findByEmail(normalizedEmail);
       if (emailTaken) {
         throw new ConflictError("A contact already exists with this email address.");
       }
     }
 
-    const updated = await this.repo.update(id, data);
+    const updated = await this.repo.update(id, {
+      ...data,
+      email: data.email ? data.email.trim().toLowerCase() : data.email,
+    });
     if (!updated) {
       throw new NotFoundError("The contact with the requested ID does not exist.");
     }

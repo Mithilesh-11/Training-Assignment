@@ -3,6 +3,10 @@ import { contacts } from "../data/contacts";
 
 export class ContactRepository {
 
+  private normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
+  }
+
   findAll(): Contact[] {
      return contacts.filter(
        (contact) => !contact.deleted_at
@@ -16,14 +20,21 @@ export class ContactRepository {
   }
 
   findByEmail(email: string): Contact | undefined {
+    const normalizedEmail = this.normalizeEmail(email);
+
     return contacts.find(
-      (contact) =>contact.email === email && !contact.deleted_at
+      (contact) => this.normalizeEmail(contact.email) === normalizedEmail && !contact.deleted_at
     );
   }
 
   create( contact: Contact ): Contact {
-    contacts.push(contact);
-    return contact;
+    const normalizedContact: Contact = {
+      ...contact,
+      email: this.normalizeEmail(contact.email)
+    };
+
+    contacts.push(normalizedContact);
+    return normalizedContact;
   }
 
   update(id: string, updatedData: Partial<Contact>): Contact | null {
@@ -36,10 +47,13 @@ export class ContactRepository {
      }
 
     const currentContact = contacts[index];
+    const normalizedUpdatedData = updatedData.email
+      ? { ...updatedData, email: this.normalizeEmail(updatedData.email) }
+      : updatedData;
 
     const updatedContact: Contact = {
         ...currentContact,
-        ...updatedData,
+        ...normalizedUpdatedData,
         updated_at: new Date(),
         version: currentContact.version + 1,
      };
@@ -58,6 +72,8 @@ export class ContactRepository {
     }
 
     contact.deleted_at = new Date();
+    contact.updated_at = new Date();
+    contact.version += 1;
 
     return true;
   }

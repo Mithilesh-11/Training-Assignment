@@ -5,6 +5,10 @@ import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 export class ContactRepositoryV2 {
 
+  private normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
+  }
+
   async findAll(query: ContactListQueryInput): Promise<Contact[]> {
     const { cursor, limit, search, email, sortBy, order } = query;
     const conditions: string[] = ["deleted_at IS NULL"];
@@ -75,9 +79,10 @@ export class ContactRepositoryV2 {
 
   // ─── Find by email ────────────────────────────────────────────────────
   async findByEmail(email: string): Promise<Contact | null> {
+    const normalizedEmail = this.normalizeEmail(email);
     const [rows] = await pool.query<RowDataPacket[]>(
-      "SELECT * FROM contacts WHERE email = ? AND deleted_at IS NULL",
-      [email]
+      "SELECT * FROM contacts WHERE LOWER(TRIM(email)) = ? AND deleted_at IS NULL",
+      [normalizedEmail]
     );
     return (rows[0] as Contact) ?? null;
   }
@@ -89,6 +94,7 @@ export class ContactRepositoryV2 {
 
   // ─── Create ───────────────────────────────────────────────────────────
   async create(id: string, data: ContactInput): Promise<Contact> {
+    const normalizedEmail = this.normalizeEmail(data.email);
     const sql = `
       INSERT INTO contacts (id, name, email, phone, address, internal_notes, version)
       VALUES (?, ?, ?, ?, ?, ?, 1)
@@ -96,7 +102,7 @@ export class ContactRepositoryV2 {
     await pool.query<ResultSetHeader>(sql, [
       id,
       data.name,
-      data.email,
+      normalizedEmail,
       data.phone,
       data.address,
       "Created by system",
@@ -116,8 +122,9 @@ export class ContactRepositoryV2 {
   // 1. Loop through keys to build clauses dynamically
   for (const [key, value] of Object.entries(data)) {
     if (value !== undefined) {
+      const normalizedValue = key === "email" ? this.normalizeEmail(value as string) : value;
       setClauses.push(`${key} = ?`);
-      params.push(value);
+      params.push(normalizedValue);
     }
   }
 
