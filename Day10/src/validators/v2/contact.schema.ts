@@ -8,13 +8,19 @@ export const SORT_FIELD_MAP: Record<string, string> = {
 
 // ─── List query schema ─────────────────────────────────────────────────────
 export const contactListQuerySchema = z.object({
-  cursor: z.uuid("cursor must be a valid UUID").optional(),
+  cursor: z.string().optional(),
 
-  limit: z
-    .string()
-    .optional()
-    .transform((v) => (v ? parseInt(v) : 20))
-    .pipe(z.number()),
+  limit: z.preprocess(
+    (value) => {
+      if (typeof value === "string") {
+        const parsed = Number(value);
+        return Number.isNaN(parsed) ? value : parsed;
+      }
+
+      return value ?? 20;
+    },
+    z.number().int().min(1).max(100).default(20)
+  ),
 
   search: z.string().min(1).optional(),
 
