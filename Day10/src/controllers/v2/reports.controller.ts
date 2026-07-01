@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ReportsService } from "../../services/v2/reports.service";
+import { sendSuccessResponse } from "../../utils/response";
 
 const service = new ReportsService();
 
@@ -12,11 +13,7 @@ export const getContactStats = async (
   try {
     const stats = await service.getContactStats();
 
-    res.status(200).json({
-      success: true,
-      data: stats,
-      error: null,
-    });
+    sendSuccessResponse(res, 200, stats);
   } catch (error) {
     next(error);
   }

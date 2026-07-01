@@ -6,6 +6,7 @@ import {
   contactListQuerySchema,
 } from "../../validators/v2/contact.schema";
 import { ValidationError } from "../../errors/custom-errors";
+import { sendSuccessResponse } from "../../utils/response";
 
 export const createContactControllerV2 = (service: ContactServiceV2) => {
   // ─── GET /api/v2/contacts ──────────────────────────────────────────────
@@ -24,14 +25,11 @@ export const createContactControllerV2 = (service: ContactServiceV2) => {
 
       const result = await service.getAllContacts(validation.data);
 
-      res.status(200).json({
-        success: true,
-        data: result.data,
+      sendSuccessResponse(res, 200, result.data, {
         pagination: {
           nextCursor: result.nextCursor,
           limit: result.limit,
         },
-        error: null,
       });
     } catch (error) {
       next(error);
@@ -52,7 +50,7 @@ export const createContactControllerV2 = (service: ContactServiceV2) => {
 
       const contact = await service.getContactById(id);
 
-      res.status(200).json({ success: true, data: contact, error: null });
+      sendSuccessResponse(res, 200, contact);
     } catch (error) {
       next(error);
     }
@@ -74,7 +72,7 @@ export const createContactControllerV2 = (service: ContactServiceV2) => {
 
       const contact = await service.createContact(validation.data);
 
-      res.status(201).json({ success: true, data: contact, error: null });
+      sendSuccessResponse(res, 201, contact);
     } catch (error) {
       next(error);
     }
@@ -101,7 +99,7 @@ export const createContactControllerV2 = (service: ContactServiceV2) => {
 
       const contact = await service.updateContact(id, validation.data);
 
-      res.status(200).json({ success: true, data: contact, error: null });
+      sendSuccessResponse(res, 200, contact);
     } catch (error) {
       next(error);
     }
@@ -121,7 +119,7 @@ export const createContactControllerV2 = (service: ContactServiceV2) => {
 
       await service.deleteContact(id);
 
-      res.status(200).json({ success: true, data: null, error: null });
+      sendSuccessResponse(res, 200, null);
     } catch (error) {
       next(error);
     }

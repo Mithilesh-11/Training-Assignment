@@ -2,17 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import { ContactService } from "../services/contact.service";
 import { contactSchema, updateContactSchema } from "../validators/contact.schema";
 import { ValidationError } from "../errors/custom-errors";
+import { sendSuccessResponse } from "../utils/response";
 
 export const createContactController = (service: ContactService) => {
   const getAllContacts = (req: Request, res: Response, next: NextFunction) => {
     try {
       const contacts = service.getAllContacts();
 
-      return res.status(200).json({
-        success: true,
-        data: contacts,
-        error: null,
-      });
+      return sendSuccessResponse(res, 200, contacts);
     } catch (error) {
       next(error);
     }
@@ -28,11 +25,7 @@ export const createContactController = (service: ContactService) => {
 
       const contact = service.getContactById(id);
 
-      return res.status(200).json({
-        success: true,
-        data: contact,
-        error: null,
-      });
+      return sendSuccessResponse(res, 200, contact);
     } catch (error) {
       next(error);
     }
@@ -50,11 +43,7 @@ export const createContactController = (service: ContactService) => {
 
       const contact = service.createContact(validation.data);
 
-      return res.status(201).json({
-        success: true,
-        data: contact,
-        error: null,
-      });
+      return sendSuccessResponse(res, 201, contact);
     } catch (error) {
       next(error);
     }
@@ -78,11 +67,7 @@ export const createContactController = (service: ContactService) => {
 
       const contact = service.updateContact(id, validation.data);
 
-      return res.status(200).json({
-        success: true,
-        data: contact,
-        error: null,
-      });
+      return sendSuccessResponse(res, 200, contact);
     } catch (error) {
       next(error);
     }
@@ -97,11 +82,7 @@ export const createContactController = (service: ContactService) => {
 
       service.deleteContact(id);
 
-      return res.status(200).json({
-        success: true,
-        data: null,
-        error: null,
-      });
+      return sendSuccessResponse(res, 200, null);
     } catch (error) {
       next(error);
     }
